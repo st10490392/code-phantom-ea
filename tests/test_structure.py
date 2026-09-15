@@ -2,8 +2,10 @@ from strategy.structure import (
     Candle,
     detect_swing_highs,
     detect_swing_lows,
+    classify_structure,
     detect_bos,
     detect_liquidity_sweeps,
+    determine_market_bias,
 )
 
 
@@ -20,6 +22,10 @@ candles = [
     Candle(103, 106, 101, 105),
 ]
 
+
+# ---------------------------------------------------------
+# SWINGS
+# ---------------------------------------------------------
 
 swing_highs = detect_swing_highs(candles)
 swing_lows = detect_swing_lows(candles)
@@ -45,10 +51,37 @@ for swing in swing_lows:
     )
 
 
+# ---------------------------------------------------------
+# STRUCTURE CLASSIFICATION
+# ---------------------------------------------------------
+
+all_swings = sorted(
+    swing_highs + swing_lows,
+    key=lambda swing: swing.index
+)
+
+classified_swings = classify_structure(all_swings)
+
+
+print("\n=== STRUCTURE CLASSIFICATION ===")
+
+for swing in classified_swings:
+    print(
+        f"Index: {swing.index} | "
+        f"Price: {swing.price} | "
+        f"Type: {swing.kind} | "
+        f"Structure: {swing.structure}"
+    )
+
+
+# ---------------------------------------------------------
+# BOS
+# ---------------------------------------------------------
+
 bos_events = detect_bos(
     candles,
-    swing_highs,
-    swing_lows
+    classified_swings,
+    classified_swings,
 )
 
 
@@ -58,14 +91,19 @@ for event in bos_events:
     print(
         f"Index: {event.index} | "
         f"Direction: {event.direction} | "
-        f"Level: {event.level}"
+        f"Level: {event.level} | "
+        f"Structure: {event.structure}"
     )
 
 
+# ---------------------------------------------------------
+# LIQUIDITY SWEEPS
+# ---------------------------------------------------------
+
 sweep_events = detect_liquidity_sweeps(
     candles,
-    swing_highs,
-    swing_lows
+    classified_swings,
+    classified_swings,
 )
 
 
@@ -75,5 +113,16 @@ for event in sweep_events:
     print(
         f"Index: {event.index} | "
         f"Direction: {event.direction} | "
-        f"Level: {event.level}"
+        f"Level: {event.level} | "
+        f"Structure: {event.structure}"
     )
+
+
+# ---------------------------------------------------------
+# MARKET BIAS
+# ---------------------------------------------------------
+
+bias = determine_market_bias(bos_events)
+
+print("\n=== MARKET BIAS ===")
+print(f"Bias: {bias}")

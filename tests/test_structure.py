@@ -62,6 +62,16 @@ all_swings = sorted(
 
 classified_swings = classify_structure(all_swings)
 
+classified_highs = [
+    swing for swing in classified_swings
+    if swing.kind == "high"
+]
+
+classified_lows = [
+    swing for swing in classified_swings
+    if swing.kind == "low"
+]
+
 
 print("\n=== STRUCTURE CLASSIFICATION ===")
 
@@ -80,8 +90,8 @@ for swing in classified_swings:
 
 bos_events = detect_bos(
     candles,
-    classified_swings,
-    classified_swings,
+    classified_highs,
+    classified_lows,
 )
 
 
@@ -102,8 +112,8 @@ for event in bos_events:
 
 sweep_events = detect_liquidity_sweeps(
     candles,
-    classified_swings,
-    classified_swings,
+    classified_highs,
+    classified_lows,
 )
 
 

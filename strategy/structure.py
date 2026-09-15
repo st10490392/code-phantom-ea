@@ -32,7 +32,7 @@ class StructureEvent:
 
 
 def detect_swing_highs(candles, window=2):
-    """
+    r"""
     Detect confirmed swing highs.
 
     With window=2:

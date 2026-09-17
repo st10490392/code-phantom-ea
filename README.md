@@ -265,6 +265,23 @@ configuration fingerprints and JSON serialization make repeated comparisons
 deterministic. These sensitivity observations describe historical behavior
 only and are neither optimization nor evidence of profitability.
 
+## Session and historical event context
+
+`strategy.temporal_context` supplies offline, point-in-time annotations.
+`SessionWindow` uses caller-defined IANA timezones and half-open local-time
+boundaries; named zones apply historical DST offsets, and midnight-crossing
+windows are supported. Experiments may require membership in one of an explicit
+set of session names, but the library makes no claim that a session improves an
+observation.
+
+Historical event records are immutable versions with separate event and
+`available_at` timestamps. A query returns only the latest version available at
+that historical instant, so release values and later revisions cannot leak
+backward. A scheduled event can affect a pre-release exclusion only if the
+caller supplies a version that was already available then. Configurable
+before/after windows and category/region filters annotate or reject research
+signals deterministically; no live news retrieval exists.
+
 ## Tests
 
 ```sh

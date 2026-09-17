@@ -250,6 +250,21 @@ statistical significance or predictive edge is implied. A reserved holdout
 suffix is excluded from every development/evaluation pair, and data after a
 completed window cannot alter that window's result.
 
+## Predefined hypothesis robustness
+
+`backtest.robustness` compares an explicitly ordered set of immutable
+`Hypothesis` objects across the same canonical dataset and walk-forward
+windows. Each hypothesis contains a complete `ExperimentConfig`; callers must
+supply every configuration under consideration. The runner does not generate
+parameter combinations, rank results, or select a winner.
+
+A caller-named baseline receives no special execution treatment. Other
+hypotheses report descriptive differences in candidate and resolved counts,
+average/cumulative R, drawdown, and matching per-window result signs. Stable
+configuration fingerprints and JSON serialization make repeated comparisons
+deterministic. These sensitivity observations describe historical behavior
+only and are neither optimization nor evidence of profitability.
+
 ## Tests
 
 ```sh

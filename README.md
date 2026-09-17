@@ -317,6 +317,20 @@ stored, and pandas/numpy remain unnecessary. Profiling showed the existing full
 engine path is costly at thousand-candle scale, so orchestration streams one
 instrument run at a time without changing established causal semantics.
 
+## Offline replay adapters and observability
+
+`adapters.replay` defines protocols for completed-candle sources, clocks,
+observational signal sinks, event context, local state persistence, and health
+reporting. Only in-memory/offline implementations exist. `ReplayAdapter`
+validates each next completed candle, computes from the accepted historical
+prefix, and emits deterministic structured records for candle acceptance,
+context updates, generated/rejected candidates, and health.
+
+Optional local JSON state is schema-versioned and SHA-256 checksummed;
+corruption or configuration mismatch is rejected. Restart results match an
+uninterrupted replay. There are no HTTP clients, sockets, broker SDKs, account
+credentials, live feeds, or real/paper order methods in this adapter layer.
+
 ## Tests
 
 ```sh

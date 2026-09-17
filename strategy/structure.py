@@ -59,16 +59,17 @@ class StructureShift:
 def _available_swings(swings, as_of_index: int):
     """Return only confirmed swings available at the evaluation candle index.
 
-    A swing is available when `confirmed_at` exists and is <= the evaluation index,
-    and the swing itself is earlier than the evaluation candle. `confirmed_at=None`
-    is never treated as confirmed.
+    A swing is available only after the confirmation bar has passed. In other
+    words, confirmation is a state that becomes active on the next candle, not
+    on the candle that confirms the swing itself. `confirmed_at=None` is never
+    treated as confirmed.
     """
 
     return [
         swing
         for swing in sorted(swings, key=lambda item: item.index)
         if swing.confirmed_at is not None
-        and swing.confirmed_at <= as_of_index
+        and swing.confirmed_at + 1 < as_of_index
         and swing.index < as_of_index
     ]
 

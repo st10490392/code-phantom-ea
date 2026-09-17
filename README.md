@@ -70,6 +70,74 @@ For compatibility, `strategy.entries.find_setups` retains the original
 `Liquidity -> FVG -> IFVG -> Displacement` sequence. It returns only complete
 research sequences and performs no execution or risk management.
 
+## Sequential multi-timeframe engine
+
+`SequentialResearchEngine` advances exactly one completed execution candle per
+call to `advance`. Each immutable `EngineSnapshot` is built only from the
+execution prefix ending at that index. Detectors never receive later execution
+candles. Snapshots expose timestamp alignment, HTF context, execution structure,
+active liquidity, current structure/liquidity events, causal imbalance states,
+displacement, dealing-range position, ordered evidence, and an optional
+`ResearchSignal`.
+
+`ContextSeries` copies caller collections into tuples so later caller mutation
+cannot alter historical engine state. Running a full history and running every
+prefix independently are required to produce identical snapshots at matching
+indices.
+
+### MTF completion and alignment
+
+Timestamps are supplied by the caller and interpreted as candle completion
+timestamps. An execution candle sees the latest HTF candle whose timestamp is
+less than or equal to the execution timestamp. Equality therefore means the HTF
+candle has just completed; a later timestamp remains invisible. Series used for
+MTF alignment require strictly increasing, mutually comparable timestamps.
+Timeframe labels do not imply durations, and missing timestamps cause a clear
+error rather than guessed alignment.
+
+HTF bias is derived from the existing confirmed Structure v1.2 BOS/MSS events.
+Until directional evidence exists, it remains neutral. External and protected
+levels and the latest causal event are retained in the HTF snapshot.
+
+### Candidate generation
+
+Candidate evidence follows the canonical order:
+
+`HTF context -> liquidity target/event -> structural shift -> displacement -> PD array -> premium/discount -> candidate setup`
+
+Thresholds and required evidence are explicit in `EngineConfig`. Evidence
+retains source indices or identities where available. A candidate is emitted
+only on a completed candle after its configured requirements exist. It is an
+immutable research observation with no execution method.
+
+## Historical simulation
+
+`backtest.simulator.simulate_candidates` applies caller-supplied hypothetical
+entry, invalidation, and objective references to later candles only. The signal
+candle itself is never used to resolve its outcome. Levels must be finite and
+must place entry strictly between invalidation and objective in the appropriate
+direction.
+
+Because OHLC data cannot reveal intrabar path, a candle touching objective and
+invalidation is ambiguous. The default `conservative` policy records a loss;
+the caller may explicitly choose the documented `optimistic` policy. Candidates
+that do not touch either reference within available history or the optional bar
+limit remain unresolved. These are hypothetical research outcomes, not orders.
+Touches are evaluated from the completed candle's full high/low. An opening gap
+beyond a reference therefore counts as touching it. If the same completed candle
+also touches the opposing reference, the selected same-candle policy still
+controls the result; the engine does not infer an intrabar path from the open.
+
+`calculate_metrics` reports candidate/resolution counts, wins, losses, resolved
+win rate, average and cumulative R, expectancy in R, peak-to-trough drawdown in
+cumulative R, and longest win/loss streaks. Empty and entirely unresolved sets
+return safe zero-valued rates and aggregates. These metrics are descriptive
+backtesting output, not evidence of predictive edge.
+
+Code Phantom EA remains offline research/backtesting infrastructure. It has no
+broker connection, live feed, credential handling, position sizing, or order
+execution interface.
+
 ## Tests
 
 ```sh

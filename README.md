@@ -282,6 +282,24 @@ caller supplies a version that was already available then. Configurable
 before/after windows and category/region filters annotate or reject research
 signals deterministically; no live news retrieval exists.
 
+## Hypothetical management research
+
+`backtest.management` extends offline simulation with immutable, caller-defined
+R-based final and partial objectives, break-even transitions, close-based
+trailing invalidation, bar expiry, and UTC-day research gain/loss boundaries.
+The existing level provider remains responsible for the initial hypothetical
+entry and invalidation. Realized fractions are accumulated with decimal
+arithmetic and retained in an auditable result.
+
+Management decisions inspect only candles after candidate generation. A stop
+moved from a completed candle becomes effective on the following candle. OHLC
+cannot reveal intrabar order, so `conservative` ambiguity handling makes the
+adverse level control whenever favorable and adverse levels are both touched;
+the caller may explicitly select `favorable`. Daily boundaries skip later
+candidates for that candidate's UTC day under this sequential research policy
+and reset on the next day. These are hypothetical rules, not position sizing,
+recommendations, or live order management.
+
 ## Tests
 
 ```sh

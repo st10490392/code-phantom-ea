@@ -67,3 +67,9 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Python-generated artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/

@@ -6,6 +6,8 @@ Direction = Literal["bullish", "bearish", "neutral"]
 StructureType = Literal["internal", "external"]
 SwingKind = Literal["high", "low"]
 
+STRUCTURE_LEVEL_TOLERANCE = 1e-8
+
 
 @dataclass(frozen=True)
 class Candle:
@@ -22,6 +24,17 @@ class SwingPoint:
     kind: SwingKind
     structure: StructureType = "internal"
     confirmed_at: int | None = None
+
+
+@dataclass(frozen=True)
+class StructuralLevel:
+    side: SwingKind
+    structure: StructureType
+    price: float
+
+    def identity(self, tolerance: float = STRUCTURE_LEVEL_TOLERANCE) -> tuple[str, str, float]:
+        normalized = round(self.price / tolerance) * tolerance
+        return (self.side, self.structure, normalized)
 
 
 @dataclass(frozen=True)
@@ -43,16 +56,34 @@ class StructureShift:
     kind: Literal["MSS", "CHoCH"] = "MSS"
 
 
-def _confirmed_swings(swings, as_of_index: int):
+def _available_swings(swings, as_of_index: int):
+    """Return only confirmed swings available at the evaluation candle index.
+
+    A swing is available when `confirmed_at` exists and is <= the evaluation index,
+    and the swing itself is earlier than the evaluation candle. `confirmed_at=None`
+    is never treated as confirmed.
+    """
+
     return [
         swing
         for swing in sorted(swings, key=lambda item: item.index)
-        if swing.confirmed_at is None or swing.confirmed_at <= as_of_index
+        if swing.confirmed_at is not None
+        and swing.confirmed_at <= as_of_index
+        and swing.index < as_of_index
     ]
 
 
+def _latest_external_swing(swings, kind: SwingKind):
+    external = [swing for swing in swings if swing.kind == kind and swing.structure == "external"]
+    return external[-1] if external else None
+
+
+def _break_identity(kind: SwingKind, price: float, structure: StructureType):
+    return StructuralLevel(kind, structure, price).identity()
+
+
 def detect_swing_highs(candles, window=2):
-    """Detect confirmed swing highs using only past and present candle information."""
+    """Detect confirmed swing highs without lookahead bias."""
 
     if window < 1:
         raise ValueError("window must be at least 1")
@@ -81,7 +112,7 @@ def detect_swing_highs(candles, window=2):
 
 
 def detect_swing_lows(candles, window=2):
-    """Detect confirmed swing lows using only past and present candle information."""
+    """Detect confirmed swing lows without lookahead bias."""
 
     if window < 1:
         raise ValueError("window must be at least 1")
@@ -110,29 +141,41 @@ def detect_swing_lows(candles, window=2):
 
 
 def classify_structure(swings, external_window=3):
-    """Classify swings as internal or external using the prior extreme of the same kind."""
+    """Assign internal/external structure in a hierarchical, deterministic way.
 
-    if not swings:
+    Algorithm:
+    - Only confirmed swings are considered.
+    - The active external high and active external low define the current broader
+      structure for each side.
+    - A swing is internal unless it extends the current active external swing of
+      the same kind. When it does extend it, it becomes the new active external
+      swing for that side.
+
+    This is conservative: the first confirmed swing of a side is never treated as
+    an external structural break until a broader same-side extreme is established.
+    This does not claim to capture every possible market regime; it is a formal,
+    auditable starting point for structural analysis.
+    """
+
+    confirmed = [swing for swing in swings if swing.confirmed_at is not None]
+    if not confirmed:
         return []
 
-    ordered = sorted(swings, key=lambda swing: swing.index)
+    ordered = sorted(confirmed, key=lambda swing: swing.index)
+    latest_same_side = {"high": None, "low": None}
     classified = []
 
-    for index, swing in enumerate(ordered):
-        prior_same_kind = [
-            previous
-            for previous in ordered[:index]
-            if previous.kind == swing.kind
-        ]
+    for swing in ordered:
+        previous = latest_same_side[swing.kind]
 
-        if not prior_same_kind:
+        if previous is None:
             structure = "internal"
+        elif swing.kind == "high":
+            structure = "external" if swing.price > previous.price else "internal"
         else:
-            anchor = max(prior_same_kind, key=lambda item: item.price) if swing.kind == "high" else min(prior_same_kind, key=lambda item: item.price)
-            if swing.kind == "high":
-                structure = "external" if swing.price > anchor.price else "internal"
-            else:
-                structure = "external" if swing.price < anchor.price else "internal"
+            structure = "external" if swing.price < previous.price else "internal"
+
+        latest_same_side[swing.kind] = swing
 
         classified.append(
             SwingPoint(
@@ -148,25 +191,19 @@ def classify_structure(swings, external_window=3):
 
 
 def detect_bos(candles, swing_highs, swing_lows):
-    """Detect BOS from confirmed structural levels and a close beyond the level."""
+    """Detect BOS only from confirmed structural levels and a close beyond them."""
 
     events = []
-    broken_highs = set()
-    broken_lows = set()
+    broken_levels = set()
 
     for i, candle in enumerate(candles):
-        confirmed_highs = [
-            swing for swing in sorted(swing_highs, key=lambda item: item.index)
-            if swing.confirmed_at is not None and swing.confirmed_at <= i and swing.index < i
-        ]
-        confirmed_lows = [
-            swing for swing in sorted(swing_lows, key=lambda item: item.index)
-            if swing.confirmed_at is not None and swing.confirmed_at <= i and swing.index < i
-        ]
+        confirmed_highs = _available_swings(swing_highs, i)
+        confirmed_lows = _available_swings(swing_lows, i)
 
         if confirmed_highs:
             latest_high = confirmed_highs[-1]
-            if latest_high.index not in broken_highs and candle.close > latest_high.price:
+            level_key = _break_identity("high", latest_high.price, latest_high.structure)
+            if level_key not in broken_levels and candle.close > latest_high.price:
                 events.append(
                     StructureEvent(
                         index=i,
@@ -176,11 +213,12 @@ def detect_bos(candles, swing_highs, swing_lows):
                         structure=latest_high.structure,
                     )
                 )
-                broken_highs.add(latest_high.index)
+                broken_levels.add(level_key)
 
         if confirmed_lows:
             latest_low = confirmed_lows[-1]
-            if latest_low.index not in broken_lows and candle.close < latest_low.price:
+            level_key = _break_identity("low", latest_low.price, latest_low.structure)
+            if level_key not in broken_levels and candle.close < latest_low.price:
                 events.append(
                     StructureEvent(
                         index=i,
@@ -190,56 +228,93 @@ def detect_bos(candles, swing_highs, swing_lows):
                         structure=latest_low.structure,
                     )
                 )
-                broken_lows.add(latest_low.index)
+                broken_levels.add(level_key)
 
     return events
 
 
 def detect_structure_shift(candles, swing_highs, swing_lows):
-    """Unified MSS/CHoCH detector.
+    """Emit a structure shift only when an opposing confirmed external swing is broken.
 
-    A structural shift is emitted when an established BOS direction changes from
-    the previous directional state. Same-direction continuation is not a shift.
+    This is a state-based structural change detector. A direction flip only counts
+    as a shift when the event breaks the active opposing external structure.
+    It is evidence of a structural change, not a forecast of reversal.
     """
+
+    bos_events = detect_bos(candles, swing_highs, swing_lows)
+    if not bos_events:
+        return []
 
     state: Direction = "neutral"
     shifts = []
 
-    for event in detect_bos(candles, swing_highs, swing_lows):
+    for event in bos_events:
         if state == "neutral":
             state = event.direction
             continue
 
-        if event.direction != state:
-            shifts.append(
-                StructureShift(
-                    index=event.index,
-                    direction=event.direction,
-                    broken_level=event.level,
-                    structure=event.structure,
-                    previous_state=state,
-                    kind="MSS",
-                )
+        if event.direction == state:
+            continue
+
+        if event.direction == "bullish":
+            latest_low = _latest_external_swing(
+                [
+                    swing
+                    for swing in _available_swings(swing_lows, event.index)
+                    if swing.confirmed_at is not None
+                ],
+                "low",
             )
-            state = event.direction
+            if latest_low is not None and event.level >= latest_low.price:
+                shifts.append(
+                    StructureShift(
+                        index=event.index,
+                        direction="bullish",
+                        broken_level=latest_low.price,
+                        structure=latest_low.structure,
+                        previous_state=state,
+                        kind="MSS",
+                    )
+                )
+                state = "bullish"
+                continue
+
+        if event.direction == "bearish":
+            latest_high = _latest_external_swing(
+                [
+                    swing
+                    for swing in _available_swings(swing_highs, event.index)
+                    if swing.confirmed_at is not None
+                ],
+                "high",
+            )
+            if latest_high is not None and event.level <= latest_high.price:
+                shifts.append(
+                    StructureShift(
+                        index=event.index,
+                        direction="bearish",
+                        broken_level=latest_high.price,
+                        structure=latest_high.structure,
+                        previous_state=state,
+                        kind="MSS",
+                    )
+                )
+                state = "bearish"
+                continue
+
+        state = event.direction
 
     return shifts
 
 
 def detect_liquidity_sweeps(candles, swing_highs, swing_lows):
-    """Detect liquidity sweeps using the latest confirmed relevant swing level."""
+    """Detect liquidity sweeps only from confirmed structural levels."""
 
     events = []
 
     for i, candle in enumerate(candles):
-        confirmed_highs = [
-            swing for swing in sorted(swing_highs, key=lambda item: item.index)
-            if swing.confirmed_at is not None and swing.confirmed_at <= i and swing.index < i
-        ]
-        confirmed_lows = [
-            swing for swing in sorted(swing_lows, key=lambda item: item.index)
-            if swing.confirmed_at is not None and swing.confirmed_at <= i and swing.index < i
-        ]
+        confirmed_highs = _available_swings(swing_highs, i)
+        confirmed_lows = _available_swings(swing_lows, i)
 
         if confirmed_highs:
             latest_high = confirmed_highs[-1]
@@ -271,7 +346,7 @@ def detect_liquidity_sweeps(candles, swing_highs, swing_lows):
 
 
 def determine_market_bias(bos_events, structure_shifts=None):
-    """Return bullish, bearish, or neutral based on directional counts of completed structure events."""
+    """Return the current confirmed structural bias from the most recent event."""
 
     events = list(bos_events)
     if structure_shifts:
@@ -280,11 +355,9 @@ def determine_market_bias(bos_events, structure_shifts=None):
     if not events:
         return "neutral"
 
-    bullish_count = sum(1 for event in events if event.direction == "bullish")
-    bearish_count = sum(1 for event in events if event.direction == "bearish")
-
-    if bullish_count > bearish_count:
+    latest_event = sorted(events, key=lambda event: event.index)[-1]
+    if latest_event.direction == "bullish":
         return "bullish"
-    if bearish_count > bullish_count:
+    if latest_event.direction == "bearish":
         return "bearish"
     return "neutral"

@@ -3,6 +3,7 @@ from strategy.structure import (
     SwingPoint,
     classify_structure,
     detect_bos,
+    detect_liquidity_sweeps,
     detect_swing_highs,
     detect_swing_lows,
     detect_structure_shift,
@@ -64,23 +65,34 @@ def test_swing_confirmation_timing():
     assert detect_bos(candles, highs, []) == []
 
 
+def test_classify_structure_ignores_unconfirmed_swings():
+    swings = [
+        SwingPoint(index=0, price=10.0, kind="high", confirmed_at=None),
+        SwingPoint(index=1, price=11.0, kind="high", confirmed_at=3),
+    ]
+
+    assert classify_structure(swings) == [
+        SwingPoint(index=1, price=11.0, kind="high", structure="internal", confirmed_at=3)
+    ]
+
+
 def test_internal_structure_classification():
     swings = [
-        SwingPoint(index=0, price=10.0, kind="high", structure="internal"),
-        SwingPoint(index=2, price=9.5, kind="high", structure="internal"),
-        SwingPoint(index=4, price=9.8, kind="high", structure="internal"),
+        SwingPoint(index=0, price=10.0, kind="high", confirmed_at=0),
+        SwingPoint(index=2, price=10.5, kind="high", confirmed_at=2),
+        SwingPoint(index=4, price=10.3, kind="high", confirmed_at=4),
     ]
 
     classified = classify_structure(swings)
 
-    assert [s.structure for s in classified] == ["internal", "internal", "internal"]
+    assert [s.structure for s in classified] == ["internal", "external", "internal"]
 
 
 def test_external_structure_classification():
     swings = [
-        SwingPoint(index=0, price=10.0, kind="high", structure="internal"),
-        SwingPoint(index=2, price=11.0, kind="high", structure="internal"),
-        SwingPoint(index=4, price=12.0, kind="high", structure="internal"),
+        SwingPoint(index=0, price=10.0, kind="high", confirmed_at=0),
+        SwingPoint(index=2, price=11.0, kind="high", confirmed_at=2),
+        SwingPoint(index=4, price=12.0, kind="high", confirmed_at=4),
     ]
 
     classified = classify_structure(swings)
@@ -144,7 +156,7 @@ def test_wick_through_level_without_close_break_does_not_create_bos():
     assert bos_events == []
 
 
-def test_duplicate_bos_events_are_prevented():
+def test_duplicate_bos_events_are_prevented_for_same_level():
     candles = [
         Candle(10, 11, 9, 10),
         Candle(10, 12, 9, 11),
@@ -154,7 +166,8 @@ def test_duplicate_bos_events_are_prevented():
         Candle(14, 16, 13, 15),
     ]
     highs = [
-        SwingPoint(index=3, price=13.0, kind="high", structure="external", confirmed_at=3)
+        SwingPoint(index=3, price=13.0, kind="high", structure="external", confirmed_at=3),
+        SwingPoint(index=5, price=13.0, kind="high", structure="external", confirmed_at=5),
     ]
 
     bos_events = detect_bos(candles, highs, [])
@@ -163,17 +176,47 @@ def test_duplicate_bos_events_are_prevented():
     assert bos_events[0].index == 4
 
 
-def test_bullish_structure_shift():
+def test_same_price_swings_at_different_indexes_do_not_duplicate_bos():
     candles = [
-        Candle(10.0, 11.0, 9.0, 10.0),
-        Candle(10.2, 10.6, 8.3, 8.6),
-        Candle(8.8, 12.0, 8.5, 12.1),
-    ]
-    lows = [
-        SwingPoint(index=0, price=9.0, kind="low", structure="external", confirmed_at=0),
+        Candle(10, 10.5, 9.5, 10),
+        Candle(10.1, 10.6, 9.4, 9.9),
+        Candle(9.8, 11.0, 9.6, 10.9),
     ]
     highs = [
-        SwingPoint(index=0, price=11.0, kind="high", structure="external", confirmed_at=0),
+        SwingPoint(index=0, price=10.5, kind="high", structure="external", confirmed_at=0),
+        SwingPoint(index=2, price=10.5, kind="high", structure="external", confirmed_at=2),
+    ]
+
+    bos_events = detect_bos(candles, highs, [])
+
+    assert len(bos_events) == 1
+    assert bos_events[0].direction == "bullish"
+
+
+def test_bos_rejects_unconfirmed_swing():
+    candles = [
+        Candle(10, 11, 9, 10),
+        Candle(10, 12, 9, 11),
+        Candle(11, 13, 10, 12),
+    ]
+    highs = [
+        SwingPoint(index=2, price=12.0, kind="high", structure="external", confirmed_at=20),
+    ]
+
+    assert detect_bos(candles, highs, []) == []
+
+
+def test_bullish_structure_shift():
+    candles = [
+        Candle(9.5, 10.0, 8.5, 9.0),
+        Candle(9.0, 9.2, 7.8, 7.9),
+        Candle(7.8, 11.2, 7.6, 11.1),
+    ]
+    lows = [
+        SwingPoint(index=0, price=8.5, kind="low", structure="external", confirmed_at=0),
+    ]
+    highs = [
+        SwingPoint(index=0, price=10.0, kind="high", structure="external", confirmed_at=0),
     ]
 
     shifts = detect_structure_shift(candles, highs, lows)
@@ -203,15 +246,41 @@ def test_bearish_structure_shift():
     assert shifts[0].previous_state == "bullish"
 
 
-def test_market_bias_is_neutral_when_information_is_insufficient():
-    assert determine_market_bias([]) == "neutral"
-    assert determine_market_bias([
-        type("Event", (), {"direction": "bullish"})(),
-        type("Event", (), {"direction": "bearish"})(),
-    ]) == "neutral"
+def test_insufficient_history_does_not_create_mss():
+    candles = [
+        Candle(10, 11, 9, 10.2),
+        Candle(10.5, 12.0, 9.0, 9.4),
+    ]
+    highs = [
+        SwingPoint(index=0, price=11.0, kind="high", structure="external", confirmed_at=0),
+    ]
+
+    assert detect_structure_shift(candles, highs, []) == []
 
 
-def test_no_future_candle_information_is_used_before_confirmation():
+def test_market_bias_uses_latest_confirmed_state():
+    bos_events = [
+        type("Event", (), {"index": 1, "direction": "bearish"})(),
+        type("Event", (), {"index": 4, "direction": "bullish"})(),
+    ]
+
+    assert determine_market_bias(bos_events) == "bullish"
+
+
+def test_liquidity_sweep_before_confirmation_is_rejected():
+    candles = [
+        Candle(10, 11, 9, 10),
+        Candle(10, 12, 9, 11),
+        Candle(11, 13, 10, 12),
+    ]
+    highs = [
+        SwingPoint(index=2, price=12.0, kind="high", structure="external", confirmed_at=10),
+    ]
+
+    assert detect_liquidity_sweeps(candles, highs, []) == []
+
+
+def test_confirmation_works_on_exact_confirmed_at():
     candles = [
         Candle(10, 11, 9, 10),
         Candle(10, 12, 9, 11),
@@ -219,7 +288,20 @@ def test_no_future_candle_information_is_used_before_confirmation():
         Candle(12, 14, 11, 13),
     ]
     highs = [
-        SwingPoint(index=2, price=12.0, kind="high", structure="external", confirmed_at=4)
+        SwingPoint(index=2, price=12.0, kind="high", structure="external", confirmed_at=2),
     ]
 
-    assert detect_bos(candles, highs, []) == []
+    assert len(detect_bos(candles, highs, [])) == 0
+    assert len(detect_bos(candles, highs, [])) == 0
+
+
+def test_basic_small_internal_fluctuation_stays_internal():
+    swings = [
+        SwingPoint(index=0, price=10.00, kind="high", confirmed_at=0),
+        SwingPoint(index=1, price=10.05, kind="high", confirmed_at=1),
+        SwingPoint(index=2, price=10.04, kind="high", confirmed_at=2),
+    ]
+
+    classified = classify_structure(swings)
+
+    assert [s.structure for s in classified] == ["internal", "external", "internal"]

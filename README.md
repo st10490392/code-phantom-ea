@@ -300,6 +300,23 @@ candidates for that candidate's UTC day under this sequential research policy
 and reset on the next day. These are hypothetical rules, not position sizing,
 recommendations, or live order management.
 
+## Multi-instrument research
+
+`backtest.portfolio` binds every canonical dataset and complete experiment
+configuration to an explicit instrument identity. `MultiInstrumentRunner`
+copies those immutable inputs, runs one `ExperimentRunner` at a time, and only
+then aggregates observational results. Engine, HTF, event, and simulation state
+is never shared between instruments.
+
+Reports retain complete instrument-level results and describe aggregate counts,
+normalized-R metrics, candidate frequency per candle, and population dispersion
+of instrument cumulative R. Aggregation does not imply diversification or
+future returns. Stress tests construct thousands of deterministic candles in
+memory across instruments and timeframes; no generated market dataset is
+stored, and pandas/numpy remain unnecessary. Profiling showed the existing full
+engine path is costly at thousand-candle scale, so orchestration streams one
+instrument run at a time without changing established causal semantics.
+
 ## Tests
 
 ```sh

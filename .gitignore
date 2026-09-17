@@ -73,3 +73,6 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+
+# Local research datasets and generated CP experiment artifacts
+.research-data/

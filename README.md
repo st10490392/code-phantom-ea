@@ -31,9 +31,11 @@ implementation. These are the repository's formal definitions and are not
 presented as universal ICT truth.
 
 - **Swing confirmation:** a pivot is a candidate only when it has the required
-	left and right candles. The swing is not considered available to downstream
-	logic until `confirmed_at`, which is the first candle index after the
-	required confirmation window.
+	left and right candles. The swing becomes available to downstream logic when
+	`confirmed_at <= as_of_index`, while still requiring `swing.index < as_of_index`.
+	In other words, a swing is not available on the candle where it itself is
+	located, but it is available immediately once the confirmation bar is in the
+	past.
 - **Internal swing:** a swing that does not exceed the most recent confirmed
 	swing of the same kind in the directional hierarchy. It remains internal
 	until it creates a new structural extreme.

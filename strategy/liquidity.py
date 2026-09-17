@@ -22,7 +22,7 @@ def _available_swings(swings: list[SwingPoint], as_of_index: int) -> list[SwingP
         swing
         for swing in sorted(swings, key=lambda item: item.index)
         if swing.confirmed_at is not None
-        and swing.confirmed_at + 1 < as_of_index
+        and swing.confirmed_at <= as_of_index
         and swing.index < as_of_index
     ]
 

@@ -291,8 +291,8 @@ def test_confirmation_works_on_exact_confirmed_at():
         SwingPoint(index=2, price=12.0, kind="high", structure="external", confirmed_at=2),
     ]
 
-    assert len(detect_bos(candles, highs, [])) == 0
-    assert len(detect_bos(candles, highs, [])) == 0
+    assert len(detect_bos(candles[:3], highs, [])) == 0
+    assert len(detect_bos(candles[:4], highs, [])) == 1
 
 
 def test_basic_small_internal_fluctuation_stays_internal():

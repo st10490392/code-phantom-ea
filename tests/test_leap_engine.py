@@ -36,10 +36,11 @@ def test_bullish_cisd_reclaims_bearish_run_open():
 def test_wick_sweep_and_body_reclaim_are_distinct():
     low = SwingPoint(0, 10.0, "low", confirmed_at=0)
     pools = build_swing_pools([], [low])
-    wick = [c(10.2, 10.4, 9.8, 10.1)]
+    wick = [c(10, 10, 10, 10), c(10.2, 10.4, 9.8, 10.1)]
     assert track_liquidity(wick, pools)[0].state == "wick_swept"
 
     body_then_reclaim = [
+        c(10, 10, 10, 10),
         c(10.2, 10.3, 9.7, 9.8),
         c(9.8, 10.3, 9.7, 10.2),
     ]
@@ -51,6 +52,7 @@ def test_body_acceptance_is_not_relabelled_as_sweep():
     low = SwingPoint(0, 10.0, "low", confirmed_at=0)
     pools = build_swing_pools([], [low])
     candles = [
+        c(10, 10, 10, 10),
         c(10.1, 10.2, 9.7, 9.8),
         c(9.8, 9.9, 9.4, 9.5),
     ]

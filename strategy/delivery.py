@@ -16,6 +16,13 @@ class DeliveryLeg:
     range: float
     body_sum: float
     efficiency: float
+    candle_count: int = 0
+    net_movement: float = 0.0
+    average_body: float = 0.0
+    average_range: float = 0.0
+    displacement_indices: tuple[int, ...] = ()
+    origin_swing_index: int | None = None
+    terminal_swing_index: int | None = None
 
 
 @dataclass(frozen=True)
@@ -35,7 +42,13 @@ def candle_direction(candle: Candle) -> Direction | None:
     return None
 
 
-def detect_delivery_legs(candles: list[Candle], min_candles: int = 2) -> list[DeliveryLeg]:
+def detect_delivery_legs(
+    candles: list[Candle], min_candles: int = 2, *,
+    displacement_lookback: int = 3,
+    displacement_range_multiple: float = 1.5,
+    displacement_body_ratio: float = 0.6,
+    swings=(),
+) -> list[DeliveryLeg]:
     """Group consecutive directional closes into price-delivery legs.
 
     This deliberately does not require a fixed fractal pivot. A four/five-candle
@@ -44,6 +57,12 @@ def detect_delivery_legs(candles: list[Candle], min_candles: int = 2) -> list[De
     """
     if min_candles < 1:
         raise ValueError("min_candles must be at least 1")
+
+    from strategy.fvg import detect_displacement
+    displacements = detect_displacement(
+        candles, displacement_lookback, displacement_range_multiple,
+        displacement_body_ratio,
+    )
 
     legs: list[DeliveryLeg] = []
     start = 0
@@ -67,6 +86,7 @@ def detect_delivery_legs(candles: list[Candle], min_candles: int = 2) -> list[De
             body_sum = sum(abs(c.close - c.open) for c in segment)
             net = abs(segment[-1].close - segment[0].open)
             efficiency = net / body_sum if body_sum else 0.0
+            ranges = [c.high - c.low for c in segment]
             legs.append(
                 DeliveryLeg(
                     start=start,
@@ -77,6 +97,15 @@ def detect_delivery_legs(candles: list[Candle], min_candles: int = 2) -> list[De
                     range=total_range,
                     body_sum=body_sum,
                     efficiency=efficiency,
+                    candle_count=count,
+                    net_movement=net,
+                    average_body=body_sum / count,
+                    average_range=sum(ranges) / count,
+                    displacement_indices=tuple(
+                        d.index for d in displacements if start <= d.index <= end
+                    ),
+                    origin_swing_index=next((s.index for s in swings if s.index == start), None),
+                    terminal_swing_index=next((s.index for s in swings if s.index == end), None),
                 )
             )
         start = end + 1

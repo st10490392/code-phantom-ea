@@ -231,6 +231,25 @@ and one-row-per-candidate CSV. Text fields with spreadsheet formula prefixes are
 escaped. Nothing is uploaded, and exported outcomes remain hypothetical research
 observations rather than executable orders or evidence of predictive edge.
 
+## Walk-forward and out-of-sample research
+
+`backtest.walkforward` partitions canonical data chronologically with immutable
+half-open index windows. `WalkForwardConfig` makes development, evaluation,
+step, anchored/rolling, and optional untouched holdout lengths explicit. No
+random split or parameter optimization is performed. Rolling development
+windows retain a fixed length; anchored windows always begin at the dataset's
+first candle. Evaluation begins only after its paired development window.
+
+`WalkForwardRunner` applies one caller-supplied `ExperimentConfig` independently
+to each window. Reports keep development, evaluation, and holdout results
+separate and include content and experiment fingerprints, counts, metrics, and
+deterministic JSON. Aggregate evaluation statistics are descriptive only:
+resolved observations, average/cumulative normalized R, win rate, drawdown, and
+positive/negative/flat window counts. Small samples can be unstable and no
+statistical significance or predictive edge is implied. A reserved holdout
+suffix is excluded from every development/evaluation pair, and data after a
+completed window cannot alter that window's result.
+
 ## Tests
 
 ```sh

@@ -138,6 +138,99 @@ Code Phantom EA remains offline research/backtesting infrastructure. It has no
 broker connection, live feed, credential handling, position sizing, or order
 execution interface.
 
+## Historical data and reproducible experiments
+
+Milestone 3 adds a standard-library-only ingestion and experiment layer. It
+does not require pandas or numpy and performs no network access.
+
+### Canonical data and CSV ingestion
+
+`data.historical.HistoricalCandle` stores a completion timestamp, OHLC, optional
+volume, and optional source metadata. Timestamps are normalized to timezone-aware
+UTC. OHLC and volume contribute to dataset identity; source metadata, filename,
+path, and the human-readable dataset identifier do not.
+
+`load_csv` accepts either an explicit `ColumnMapping` or an unambiguous default
+header mapping. Default timestamp aliases are `timestamp`, `time`, `date`, and
+`datetime`; if more than one is present, loading fails rather than guessing.
+Naive timestamps require an explicit IANA timezone or timezone object. DST gaps
+and ambiguous folds are rejected. ISO-8601 offsets and `Z` are normalized to UTC.
+
+Before a dataset is accepted, ingestion rejects empty files, missing columns,
+inconsistent row shapes, malformed or non-finite numbers, invalid OHLC geometry,
+duplicate timestamps, and timestamps moving backward. Errors identify the CSV
+data row when applicable. Strict loading produces no repaired rows.
+
+A minimal file is:
+
+```csv
+timestamp,open,high,low,close,volume
+2026-01-01T10:00:00Z,100,102,99,101,25
+2026-01-01T10:05:00Z,101,103,100,102,30
+```
+
+`DatasetQualityReport` records count, UTC range, ordering, duplicates, observed
+interval consistency, and invalid rows. Missing intervals are reported only
+when the caller supplies an expected interval; a timeframe label alone never
+implies missing candles.
+
+### Timeframe aggregation
+
+`aggregate_timeframe` uses UTC Unix-epoch-aligned `(bucket_start, bucket_end]`
+buckets. A source candle completing exactly on a boundary belongs to the bucket
+ending on that boundary. Aggregated open/high/low/close use first/max/min/final
+values, and volume is summed only when every source candle has volume.
+
+The aggregated candle timestamp is its bucket completion time. The final bucket
+is dropped by default unless its final source candle completes exactly at that
+boundary. `retain_incomplete_final=True` is an explicit caller assertion to
+retain it; it still carries the actual bucket-end completion timestamp and is
+therefore not visible to the sequential engine before that time.
+
+### Experiment configuration and identity
+
+`ExperimentConfig` is frozen and contains the experiment and dataset IDs,
+execution and optional HTF intervals, complete `EngineConfig`, OTE values,
+candidate requirements, and complete `SimulationConfig`. Serialization is
+stable-key JSON containing all resolved defaults. Loading requires the exact
+schema: missing, unknown, duplicate, non-finite, or incorrectly typed
+strategy-affecting fields are rejected.
+
+Example construction:
+
+```python
+from backtest.experiment import ExperimentConfig, ExperimentRunner, SimulationConfig
+
+config = ExperimentConfig(
+    experiment_name="example-research",
+    dataset_identifier="sample-2026-01",
+    execution_timeframe="5m",
+    execution_interval_seconds=300,
+    higher_timeframe_seconds=3600,
+    simulation=SimulationConfig(
+        risk_distance=1.0,
+        reward_risk=2.0,
+        same_candle_policy="conservative",
+    ),
+)
+result = ExperimentRunner(dataset, config).run()
+```
+
+The dataset fingerprint is SHA-256 over deterministic JSON containing canonical
+UTC completion timestamps, normalized OHLC, and volume. The experiment
+fingerprint is SHA-256 over that dataset fingerprint, the complete normalized
+configuration, and `RESEARCH_SCHEMA_VERSION`. The schema version changes when
+report/fingerprint interpretation changes; reproducibility is not based solely
+on a Git commit.
+
+`ExperimentRunner` constructs timeframe contexts, advances
+`SequentialResearchEngine` candle by candle, collects immutable candidates,
+applies the configured hypothetical research rule, calculates metrics, and
+returns an immutable `ExperimentResult`. Reports export deterministic local JSON
+and one-row-per-candidate CSV. Text fields with spreadsheet formula prefixes are
+escaped. Nothing is uploaded, and exported outcomes remain hypothetical research
+observations rather than executable orders or evidence of predictive edge.
+
 ## Tests
 
 ```sh

@@ -1,0 +1,474 @@
+{
+  "fingerprint_algorithm": "sha256(canonical-json(result))",
+  "result": {
+    "assumptions": [
+      "MetaQuotes MqlRates.time is a UTC bar-open timestamp under the documented evidence chain",
+      "canonical M1 completion time equals provider open time plus exactly one minute",
+      "M15 and H4 aggregation uses UTC epoch-aligned completed-candle buckets",
+      "candidate-candle close is the hypothetical entry reference",
+      "protected execution swing is frozen as strategy invalidation by pre-performance research decision"
+    ],
+    "baseline_freeze_fingerprint": "ed0dfaa133ca0f3cbc3b60dee9f19da63a788d7ba639f07ce04a675311520559",
+    "cross_instrument_description": {
+      "EURUSD": {
+        "bearish_percentage": 0.0,
+        "bullish_percentage": 0.0,
+        "candidate_frequency_per_m15": 0.0,
+        "cumulative_r": 0,
+        "expectancy_r": 0.0,
+        "loss_percentage_of_resolved": 0.0,
+        "maximum_drawdown_r": 0.0,
+        "resolved_percentage_of_simulatable": 0.0,
+        "simulatable_percentage": 0.0,
+        "unresolved_percentage_of_simulatable": 0.0,
+        "win_percentage_of_resolved": 0.0,
+        "yearly_expectancy_r": {
+          "2018": 0.0,
+          "2019": 0.0,
+          "2020": 0.0,
+          "2021": 0.0,
+          "2022": 0.0
+        }
+      },
+      "GBPUSD": {
+        "bearish_percentage": 0.0,
+        "bullish_percentage": 0.0,
+        "candidate_frequency_per_m15": 0.0,
+        "cumulative_r": 0,
+        "expectancy_r": 0.0,
+        "loss_percentage_of_resolved": 0.0,
+        "maximum_drawdown_r": 0.0,
+        "resolved_percentage_of_simulatable": 0.0,
+        "simulatable_percentage": 0.0,
+        "unresolved_percentage_of_simulatable": 0.0,
+        "win_percentage_of_resolved": 0.0,
+        "yearly_expectancy_r": {
+          "2018": 0.0,
+          "2019": 0.0,
+          "2020": 0.0,
+          "2021": 0.0,
+          "2022": 0.0
+        }
+      }
+    },
+    "execution_revision_fingerprint": "5b0d557a3d6fcddebab74b79d2e6c3bb563fec8b6a5019d72111ea6f1f31ed2a",
+    "experiment_id": "CP-001-development-results-v1",
+    "git_revision": "561a26c89f2332b54e31ee3ca17f1a117da87e4b",
+    "implementation_identity": "78c16d6508658eb9e63bc56cb99b010cb9edd3b66ef3e9e2b4b022b3359b969a",
+    "instruments": {
+      "EURUSD": {
+        "candidate_population": {
+          "bearish_candidates": 0,
+          "bullish_candidates": 0,
+          "non_simulatable_candidates": 0,
+          "non_simulatable_reason_counts": {},
+          "simulatable_candidates": 0,
+          "simulatable_percentage": 0.0,
+          "total_candidates": 0
+        },
+        "input": {
+          "aggregation": {
+            "H4": {
+              "count": 7781,
+              "first_completion": "2018-01-02T04:00:00Z",
+              "last_completion": "2022-12-30T20:00:00Z"
+            },
+            "M1": {
+              "count": 1862451,
+              "first_completion": "2018-01-02T00:01:00Z",
+              "last_completion": "2022-12-30T23:55:00Z"
+            },
+            "M15": {
+              "count": 124322,
+              "first_completion": "2018-01-02T00:15:00Z",
+              "last_completion": "2022-12-30T23:45:00Z"
+            }
+          },
+          "development_fingerprint": "9ea6bbd6e96e1a248657fbfba90387d8b4ad22f02bd353591620bdd993697d67",
+          "gap_span_count": 819,
+          "missing_m1_intervals": 764104,
+          "source_row_counts_by_year": {
+            "2018": 371934,
+            "2019": 371475,
+            "2020": 373024,
+            "2021": 373168,
+            "2022": 372850
+          },
+          "source_years": [
+            2018,
+            2019,
+            2020,
+            2021,
+            2022
+          ]
+        },
+        "outcome_metrics": {
+          "average_r": 0.0,
+          "cumulative_r": 0,
+          "expectancy_r": 0.0,
+          "longest_loss_streak": 0,
+          "longest_win_streak": 0,
+          "losses": 0,
+          "maximum_drawdown_r": 0.0,
+          "resolved": 0,
+          "total_candidates": 0,
+          "unresolved": 0,
+          "win_rate": 0.0,
+          "wins": 0
+        },
+        "yearly_metrics": {
+          "2018": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2019": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2020": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2021": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2022": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          }
+        }
+      },
+      "GBPUSD": {
+        "candidate_population": {
+          "bearish_candidates": 0,
+          "bullish_candidates": 0,
+          "non_simulatable_candidates": 0,
+          "non_simulatable_reason_counts": {},
+          "simulatable_candidates": 0,
+          "simulatable_percentage": 0.0,
+          "total_candidates": 0
+        },
+        "input": {
+          "aggregation": {
+            "H4": {
+              "count": 7781,
+              "first_completion": "2018-01-02T04:00:00Z",
+              "last_completion": "2022-12-30T20:00:00Z"
+            },
+            "M1": {
+              "count": 1862220,
+              "first_completion": "2018-01-02T00:02:00Z",
+              "last_completion": "2022-12-30T23:56:00Z"
+            },
+            "M15": {
+              "count": 124324,
+              "first_completion": "2018-01-02T00:15:00Z",
+              "last_completion": "2022-12-30T23:45:00Z"
+            }
+          },
+          "development_fingerprint": "4197fa40c489531ff1f4461156c937ee92ec84bd9c9b5385213425abee3959f9",
+          "gap_span_count": 915,
+          "missing_m1_intervals": 764335,
+          "source_row_counts_by_year": {
+            "2018": 371927,
+            "2019": 371476,
+            "2020": 372994,
+            "2021": 373119,
+            "2022": 372704
+          },
+          "source_years": [
+            2018,
+            2019,
+            2020,
+            2021,
+            2022
+          ]
+        },
+        "outcome_metrics": {
+          "average_r": 0.0,
+          "cumulative_r": 0,
+          "expectancy_r": 0.0,
+          "longest_loss_streak": 0,
+          "longest_win_streak": 0,
+          "losses": 0,
+          "maximum_drawdown_r": 0.0,
+          "resolved": 0,
+          "total_candidates": 0,
+          "unresolved": 0,
+          "win_rate": 0.0,
+          "wins": 0
+        },
+        "yearly_metrics": {
+          "2018": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2019": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2020": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2021": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          },
+          "2022": {
+            "candidate_population": {
+              "bearish_candidates": 0,
+              "bullish_candidates": 0,
+              "non_simulatable_candidates": 0,
+              "non_simulatable_reason_counts": {},
+              "simulatable_candidates": 0,
+              "simulatable_percentage": 0.0,
+              "total_candidates": 0
+            },
+            "outcome_metrics": {
+              "average_r": 0.0,
+              "cumulative_r": 0,
+              "expectancy_r": 0.0,
+              "longest_loss_streak": 0,
+              "longest_win_streak": 0,
+              "losses": 0,
+              "maximum_drawdown_r": 0.0,
+              "resolved": 0,
+              "total_candidates": 0,
+              "unresolved": 0,
+              "win_rate": 0.0,
+              "wins": 0
+            }
+          }
+        }
+      }
+    },
+    "limitations": [
+      "descriptive historical hypothesis evaluation only",
+      "no broker execution, costs, slippage, spread model, account balance, leverage, or real-money return",
+      "H4 supplies candidate context only and cannot supply invalidation",
+      "non-simulatable candidates remain in raw candidate counts but have no outcome",
+      "session and economic-news context are not integrated into candidate generation",
+      "unresolved candidates have no normalized R and are excluded from resolved-only R metrics",
+      "when no resolved candidates exist, win rate, average R, expectancy R, cumulative R, drawdown, and streak metrics use the simulator's deterministic zero-valued empty-population convention",
+      "calendar-year tables cohort by candidate completion year within one continuous development run",
+      "the 2022 cohort has no source candles beyond the development boundary"
+    ],
+    "management": {
+      "ambiguity_policy": "conservative",
+      "break_even_after_partial": false,
+      "daily_gain_boundary_r": null,
+      "daily_loss_boundary_r": null,
+      "maximum_holding_execution_bars": 96,
+      "objective_r": 2.0,
+      "partial": null,
+      "trailing_distance_r": null
+    },
+    "sanity_acceptance": {
+      "candidate_time_m15_snapshot": true,
+      "completed_h4_alignment": true,
+      "conservative_same_candle_ambiguity": true,
+      "exact_objective_r": 2.0,
+      "future_prefix_invariance_equivalence_suite": true,
+      "h4_invalidation_fallback": false,
+      "maximum_subsequent_m15_bars": 96,
+      "resolution_begins_after_candidate": true,
+      "stop_fallback": false
+    },
+    "walk_forward": {
+      "reason": "development length, evaluation length, step length, and anchored/rolling policy were not frozen before performance observation",
+      "status": "blocked_not_run"
+    }
+  },
+  "result_fingerprint": "57671bc3eade824bdd97b0cf6d680e43641f093b7555049e578115f6f77e606e"
+}

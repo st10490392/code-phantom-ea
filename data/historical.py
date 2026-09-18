@@ -305,17 +305,24 @@ def _canonical_number(value: float | None):
 
 def dataset_fingerprint(dataset: HistoricalDataset) -> str:
     """Hash canonical UTC timestamp/OHLC/volume; identifier and metadata excluded."""
-    records = [{
-        "timestamp": candle.timestamp.isoformat().replace("+00:00", "Z"),
-        "open": _canonical_number(candle.open),
-        "high": _canonical_number(candle.high),
-        "low": _canonical_number(candle.low),
-        "close": _canonical_number(candle.close),
-        "volume": _canonical_number(candle.volume),
-    } for candle in dataset.candles]
-    payload = json.dumps(records, sort_keys=True, separators=(",", ":"),
-                         allow_nan=False).encode("utf-8")
-    return hashlib.sha256(payload).hexdigest()
+    digest = hashlib.sha256()
+    digest.update(b"[")
+    for index, candle in enumerate(dataset.candles):
+        if index:
+            digest.update(b",")
+        record = {
+            "timestamp": candle.timestamp.isoformat().replace("+00:00", "Z"),
+            "open": _canonical_number(candle.open),
+            "high": _canonical_number(candle.high),
+            "low": _canonical_number(candle.low),
+            "close": _canonical_number(candle.close),
+            "volume": _canonical_number(candle.volume),
+        }
+        digest.update(json.dumps(
+            record, sort_keys=True, separators=(",", ":"), allow_nan=False,
+        ).encode("utf-8"))
+    digest.update(b"]")
+    return digest.hexdigest()
 
 
 def aggregate_timeframe(dataset: HistoricalDataset, interval: timedelta, *,

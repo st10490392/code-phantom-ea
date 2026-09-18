@@ -1,0 +1,48 @@
+{
+  "fingerprint_algorithm": "sha256(canonical-json(specification))",
+  "revision_fingerprint": "5b0d557a3d6fcddebab74b79d2e6c3bb563fec8b6a5019d72111ea6f1f31ed2a",
+  "specification": {
+    "behavioral_equivalence": {
+      "identity": "reference == execution revision 1 == execution revision 2",
+      "oracle_engine": "strategy.engine.SequentialResearchEngine",
+      "revision_1_engine": "strategy.optimized_engine.OptimizedSequentialResearchEngine",
+      "revision_2_engine": "strategy.optimized_engine_v2.OptimizedSequentialResearchEngineV2",
+      "required_identity": "exact EngineSnapshot and structural simulation classification equality",
+      "test_file": "tests/test_optimized_engine_v2_equivalence.py",
+      "test_file_sha256": "535432ba862b54c81fcaa1ae36ce2b8d119758716e24ac8b03cd3687212eb0d5"
+    },
+    "identity": "CP-001-execution-revision-2",
+    "optimized_implementation": {
+      "implementation_content_sha256": "78c16d6508658eb9e63bc56cb99b010cb9edd3b66ef3e9e2b4b022b3359b969a",
+      "implementation_files": {
+        "benchmarks/cp001_engine_v2_benchmark.py": "c14becac4a7354f14df9a34370c325b9de029feb9213aff477324915031d73a8",
+        "docs/CP-001-performance-refactor-revision-2.md": "8850cd09b3c6eaef35aad9afa2ff78f412eb26f5dfc8d597f393dfa2e7961fed",
+        "strategy/optimized_engine_v2.py": "0b50bee8b8514bf02bf67c9c7da1a941c4a6316c7bfb04bcac1ce8ae4887a836"
+      }
+    },
+    "original_baseline": {
+      "artifact": "experiments/CP-001-baseline-v1.json",
+      "artifact_file_sha256": "043cd6f49ca94709ac1acca04b6bf39285a0dc18baa436f3861f164512debf37",
+      "freeze_fingerprint": "ed0dfaa133ca0f3cbc3b60dee9f19da63a788d7ba639f07ce04a675311520559",
+      "frozen_revision": "3f431d6ec1190f054c7771a9d03f8041e89903d1"
+    },
+    "previous_execution_revision": {
+      "artifact": "experiments/CP-001-execution-revision-1.json",
+      "artifact_file_sha256": "101d5c818d64564bbbe3837cbcc5bfbd3249c3fb1d0ce3a798ae86868540ca56",
+      "implementation_content_sha256": "971e42992a9b22ff12396ef0931a20c743b0e26f8922a801d937c8084b884db2",
+      "revision_fingerprint": "e637361badac1c689b398b9e34b5c36b69095c6d7c162a201e60ad80b87df5e2"
+    },
+    "research_status": {
+      "development_run_authorized_by_this_revision": false,
+      "market_data_used_only_for_runtime_benchmark": true,
+      "strategy_performance_metrics_observed": false
+    },
+    "revision_reason": "computational performance only: remove repeated cumulative sorting, scanning, and immutable-history reconstruction",
+    "strategy_identity": {
+      "configuration": "unchanged specification in experiments/CP-001-baseline-v1.json",
+      "hypothesis": "same CP-001 Baseline V1 frozen strategy; this is not a new or optimized strategy",
+      "strategy_changes": false
+    },
+    "version": "Execution Revision 2"
+  }
+}

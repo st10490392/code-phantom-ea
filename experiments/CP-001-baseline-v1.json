@@ -1,0 +1,154 @@
+{
+  "fingerprint_algorithm": "sha256(canonical-json(specification))",
+  "freeze_fingerprint": "ed0dfaa133ca0f3cbc3b60dee9f19da63a788d7ba639f07ce04a675311520559",
+  "specification": {
+    "assumptions": [
+      "MetaQuotes MqlRates.time is a UTC bar-open timestamp under the documented evidence chain",
+      "canonical M1 completion time equals provider open time plus exactly one minute",
+      "M15 and H4 aggregation uses UTC epoch-aligned completed-candle buckets",
+      "candidate-candle close is the hypothetical entry reference",
+      "protected execution swing is frozen as strategy invalidation by pre-performance research decision"
+    ],
+    "candidate_generation": {
+      "engine": {
+        "displacement_body_ratio": 0.6,
+        "displacement_lookback": 5,
+        "displacement_range_multiple": 1.5,
+        "equilibrium_tolerance": 0.0,
+        "liquidity_tolerance": 0.0,
+        "reclaim_window": 1,
+        "require_displacement": true,
+        "require_htf_bias": true,
+        "require_liquidity_event": true,
+        "require_mss": true,
+        "require_pd_array": true,
+        "require_price_zone": true,
+        "swing_window": 2
+      },
+      "known_limitations": [
+        "liquidity evidence can include internal pools",
+        "historical consumed liquidity can qualify",
+        "historical FVG or IFVG evidence can qualify",
+        "ordinary FVG state is not restricted to currently valid or unmitigated gaps",
+        "OTE and retracement are not part of candidate generation",
+        "evidence can originate at different historical indices",
+        "the engine consumes one H4 context rather than a D1-H4-H1-M30-M15 hierarchy"
+      ],
+      "ote_lower_fraction_serialized_but_not_used": 0.62,
+      "ote_upper_fraction_serialized_but_not_used": 0.79,
+      "retain_incomplete_final_htf": false
+    },
+    "code_identity": {
+      "implementation_content_sha256": "99225ecc8b9efefed2c3934a7b8413f35fde7c7e891aa72eeb2683892ce01916",
+      "implementation_files": {
+        "backtest/experiment.py": "1b43993b075a096113da40096680b9f97a12e9933680630c77428060def9c4b8",
+        "backtest/management.py": "829ba0fe280b8b1ae6eb7addb3af459a76cb79f945053a9a398e46d0d675b368",
+        "backtest/simulator.py": "50d17b9063ef954e9449de23b317ddb607d8e1a879187dc4f4bae0b165fbb512",
+        "backtest/structural.py": "7191967ba9e453e4192ae53fa025e301eae4238dbfd249e763cf7c5677449c34",
+        "data/historical.py": "0439e1cbbc7429946e4a79de4ed544801f1ef6d6bbc42d6793c898df500256d7",
+        "data/mt5.py": "ee9ef670495f24ddfc699dba7210dc2b412b510cad91fe6ac8176fbd154d32ec",
+        "strategy/confluence.py": "cc07a369885ad0f04b7768f5ab8491da713530baf58056c272b0e56ee3a750aa",
+        "strategy/context.py": "8efd4bb90adbc1851c5880432490423d8d2ad4c1bce96368023f109f61a47ae1",
+        "strategy/engine.py": "21cdda0ba54a9a69d0b252c81bd66167b1914b70e9939c1ccd672dacb09712af",
+        "strategy/fvg.py": "539a57871a5cbdbbed47df47cfd76663d3bc6e854bd69b9d7980a0094e553269",
+        "strategy/imbalance.py": "28d9727714f9993d605f2356b243d5e85c10fa6ee8cc932f91aef0673daa1111",
+        "strategy/liquidity_v2.py": "8dca5638ba33bbc7915e927d6e379570849923efc664114fb988c0f2d017c801",
+        "strategy/structure.py": "a45b7215cb0e95b53589df738a8e454096cb648864866cc23028950e3e00186c",
+        "strategy/timeframes.py": "49c6aea1c57b9549ff77dcad7022b69dd5f8595c768a8647bc598098ba2aafd5"
+      },
+      "parent_checkpoint": "5a9e3195b4efb26c0983a04fed399209a117d0f4",
+      "revision_method": "parent checkpoint plus canonical path-and-sha256 list of executable implementation files"
+    },
+    "data": {
+      "canonical_pre_holdout_fingerprints_2018_2024": {
+        "EURUSD": "4c4a57cb8b0f6528e6ac7ac0bd9599347c31993474a16c0122eabc9be8d452b4",
+        "GBPUSD": "1a3dff164f49243f39a78c0542c0f7dbe2346d3d8a8ee5030ca70e1f13afdf6c"
+      },
+      "canonical_timestamp": "UTC completion",
+      "instruments": [
+        "EURUSD",
+        "GBPUSD"
+      ],
+      "primary_instrument": "EURUSD",
+      "provider": "MetaTrader 5 / MetaQuotes-Demo",
+      "raw_schema": "provider_time,open,high,low,close,tick_volume,spread,real_volume",
+      "secondary_replication_instrument": "GBPUSD",
+      "source_timeframe": "M1"
+    },
+    "derived_timeframes": {
+      "execution": {
+        "aggregation_seconds": 900,
+        "label": "M15",
+        "retain_incomplete_final": false
+      },
+      "higher_context": {
+        "aggregation_seconds": 14400,
+        "label": "H4",
+        "retain_incomplete_final": false
+      }
+    },
+    "identifier": "CP-001",
+    "limitations": [
+      "descriptive historical hypothesis evaluation only",
+      "no broker execution, costs, slippage, spread model, account balance, leverage, or real-money return",
+      "H4 supplies candidate context only and cannot supply invalidation",
+      "non-simulatable candidates remain in raw candidate counts but have no outcome",
+      "session and economic-news context are not integrated into candidate generation"
+    ],
+    "management": {
+      "ambiguity_policy": "conservative",
+      "break_even_after_partial": false,
+      "daily_gain_boundary_r": null,
+      "daily_loss_boundary_r": null,
+      "maximum_holding_execution_bars": 96,
+      "objective_r": 2.0,
+      "partial": null,
+      "trailing_distance_r": null
+    },
+    "news_policy": {
+      "enabled": false,
+      "reason": "no trustworthy local point-in-time historical event dataset"
+    },
+    "partitions": {
+      "development_source_years": [
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "holdout": "2025-01-01 through 2026-12-31/latest available; inaccessible",
+      "temporal_development_slices": [
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022"
+      ],
+      "validation": "2023-01-01 through 2024-12-31; locked"
+    },
+    "research_schema_version": "3.0",
+    "session_policy": {
+      "descriptive_classification": false,
+      "filter_candidates": false,
+      "named_sessions": []
+    },
+    "structural_invalidation": {
+      "anchor": "opposite protected execution-timeframe swing at candidate completion",
+      "bearish": "entry=candidate M15 close; invalidation=StructureState.protected_high.price",
+      "buffer": null,
+      "fallback": null,
+      "bullish": "entry=candidate M15 close; invalidation=StructureState.protected_low.price",
+      "higher_timeframe_levels_allowed": false,
+      "non_simulatable_conditions": [
+        "missing protected swing",
+        "non-finite anchor",
+        "directionally invalid anchor",
+        "zero risk",
+        "invalid deterministic level construction"
+      ],
+      "objective": "entry plus or minus 2.0 times absolute entry-to-invalidation risk"
+    },
+    "version": "Baseline V1"
+  }
+}

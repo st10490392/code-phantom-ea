@@ -1,0 +1,41 @@
+{
+  "fingerprint_algorithm": "sha256(canonical-json(specification))",
+  "revision_fingerprint": "e637361badac1c689b398b9e34b5c36b69095c6d7c162a201e60ad80b87df5e2",
+  "specification": {
+    "behavioral_equivalence": {
+      "oracle_engine": "strategy.engine.SequentialResearchEngine",
+      "optimized_engine": "strategy.optimized_engine.OptimizedSequentialResearchEngine",
+      "required_identity": "exact EngineSnapshot and structural simulation classification equality",
+      "test_file": "tests/test_optimized_engine_equivalence.py",
+      "test_file_sha256": "57da8f09d86867ef9ee6addb45d0bc397fd31a1e6f8ff016ae840732d55e030d"
+    },
+    "identity": "CP-001-execution-revision-1",
+    "optimized_implementation": {
+      "implementation_content_sha256": "971e42992a9b22ff12396ef0931a20c743b0e26f8922a801d937c8084b884db2",
+      "implementation_files": {
+        "benchmarks/cp001_engine_benchmark.py": "1c79e1c475845b0115c835710e2ccd613dc790ba9e39437b3afecd46f3abf835",
+        "docs/CP-001-performance-refactor.md": "ee7850efc3458b6ec86461758c443c1dbfeb3ef29ad8478b1f5ba8c32834f1c0",
+        "strategy/optimized_engine.py": "feaab36f3abcdd97dfa5f91bd20a9ff040247294b880a570819f125a918b694e"
+      }
+    },
+    "original_baseline": {
+      "artifact": "experiments/CP-001-baseline-v1.json",
+      "artifact_file_sha256": "043cd6f49ca94709ac1acca04b6bf39285a0dc18baa436f3861f164512debf37",
+      "freeze_fingerprint": "ed0dfaa133ca0f3cbc3b60dee9f19da63a788d7ba639f07ce04a675311520559",
+      "frozen_implementation_content_sha256": "99225ecc8b9efefed2c3934a7b8413f35fde7c7e891aa72eeb2683892ce01916",
+      "frozen_revision": "3f431d6ec1190f054c7771a9d03f8041e89903d1"
+    },
+    "research_status": {
+      "development_run_authorized_by_this_revision": false,
+      "market_data_used_for_refactor": false,
+      "strategy_performance_results_before_refactor": false
+    },
+    "revision_reason": "computational performance only: replace full-prefix reconstruction with behaviorally equivalent incremental state transitions",
+    "strategy_identity": {
+      "configuration": "unchanged specification in experiments/CP-001-baseline-v1.json",
+      "hypothesis": "same CP-001 Baseline V1 frozen strategy; this is not a new or optimized strategy",
+      "strategy_changes": false
+    },
+    "version": "Execution Revision 1"
+  }
+}

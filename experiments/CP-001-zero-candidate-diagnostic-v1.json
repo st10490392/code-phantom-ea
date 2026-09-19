@@ -1,0 +1,1640 @@
+{
+  "diagnostic": {
+    "baseline_fingerprint": "ed0dfaa133ca0f3cbc3b60dee9f19da63a788d7ba639f07ce04a675311520559",
+    "candidate_gate_order": [
+      "HTF context",
+      "liquidity event",
+      "structural shift",
+      "displacement",
+      "PD array",
+      "premium/discount"
+    ],
+    "development_result_file_sha256": "43ae8a681b9ab72e754ed94120c73625bac9e4c6855a5ccdffb6b15f88c2e4d7",
+    "development_result_fingerprint": "57671bc3eade824bdd97b0cf6d680e43641f093b7555049e578115f6f77e606e",
+    "diagnostic_id": "CP-001-zero-candidate-diagnostic-v1",
+    "execution_revision_2_fingerprint": "5b0d557a3d6fcddebab74b79d2e6c3bb563fec8b6a5019d72111ea6f1f31ed2a",
+    "git_revision": "8afbd0d3feb03608f30ec50cf50b99bffed107f2",
+    "instruments": {
+      "EURUSD": {
+        "development_fingerprint": "9ea6bbd6e96e1a248657fbfba90387d8b4ad22f02bd353591620bdd993697d67",
+        "diagnostic": {
+          "completed_h4_context_candles": 124307,
+          "completed_h4_context_percentage_total_m15": 99.98793455703738,
+          "dealing_range_available_candles": 124299,
+          "dealing_range_available_percentage_total_m15": 99.98149965412397,
+          "direction_counts": {
+            "bearish": 15117,
+            "bullish": 15298
+          },
+          "direction_trigger_counts": {
+            "current_displacement": 10056,
+            "current_mss": 7,
+            "current_terminal_liquidity": 20352
+          },
+          "directional_breakdown": {
+            "bearish": {
+              "cumulative_pass_counts": {
+                "HTF context": 14122,
+                "liquidity event": 14122,
+                "structural shift": 1
+              },
+              "eligible_candles": 15117,
+              "emitted_signals": 0,
+              "first_fail_counts": {
+                "HTF context": 995,
+                "displacement": 1,
+                "structural shift": 14121
+              },
+              "individual_pass_counts": {
+                "HTF context": 14122,
+                "PD array": 15116,
+                "displacement": 5095,
+                "liquidity event": 15117,
+                "premium/discount": 4586,
+                "structural shift": 4
+              },
+              "near_miss_distribution": {
+                "2/6": 118,
+                "3/6": 7465,
+                "4/6": 6261,
+                "5/6": 1273
+              },
+              "pairwise_intersections": {
+                "HTF context \u00d7 PD array": 14122,
+                "HTF context \u00d7 displacement": 4776,
+                "HTF context \u00d7 liquidity event": 14122,
+                "HTF context \u00d7 premium/discount": 3782,
+                "HTF context \u00d7 structural shift": 1,
+                "PD array \u00d7 premium/discount": 4585,
+                "displacement \u00d7 PD array": 5095,
+                "displacement \u00d7 premium/discount": 1520,
+                "liquidity event \u00d7 PD array": 15116,
+                "liquidity event \u00d7 displacement": 5095,
+                "liquidity event \u00d7 premium/discount": 4586,
+                "liquidity event \u00d7 structural shift": 4,
+                "structural shift \u00d7 PD array": 4,
+                "structural shift \u00d7 displacement": 1
+              }
+            },
+            "bullish": {
+              "cumulative_pass_counts": {
+                "HTF context": 975,
+                "liquidity event": 975
+              },
+              "eligible_candles": 15298,
+              "emitted_signals": 0,
+              "first_fail_counts": {
+                "HTF context": 14323,
+                "structural shift": 975
+              },
+              "individual_pass_counts": {
+                "HTF context": 975,
+                "PD array": 15298,
+                "displacement": 4965,
+                "liquidity event": 15296,
+                "premium/discount": 10697,
+                "structural shift": 3
+              },
+              "near_miss_distribution": {
+                "2/6": 2550,
+                "3/6": 8902,
+                "4/6": 3802,
+                "5/6": 44
+              },
+              "pairwise_intersections": {
+                "HTF context \u00d7 PD array": 975,
+                "HTF context \u00d7 displacement": 310,
+                "HTF context \u00d7 liquidity event": 975,
+                "HTF context \u00d7 premium/discount": 144,
+                "PD array \u00d7 premium/discount": 10697,
+                "displacement \u00d7 PD array": 4965,
+                "displacement \u00d7 premium/discount": 3477,
+                "liquidity event \u00d7 PD array": 15296,
+                "liquidity event \u00d7 displacement": 4963,
+                "liquidity event \u00d7 premium/discount": 10697,
+                "liquidity event \u00d7 structural shift": 3,
+                "structural shift \u00d7 PD array": 3,
+                "structural shift \u00d7 displacement": 3
+              }
+            }
+          },
+          "eligible_candidate_evaluations": 30415,
+          "eligible_percentage_total_m15": 24.464696513891347,
+          "emitted_research_signals": 0,
+          "first_fail_counts": {
+            "HTF context": 15318,
+            "displacement": 1,
+            "structural shift": 15096
+          },
+          "funnel": {
+            "cumulative_pass_counts": {
+              "HTF context": 15097,
+              "liquidity event": 15097,
+              "structural shift": 1
+            },
+            "individual_pass_counts": {
+              "HTF context": 15097,
+              "PD array": 30414,
+              "displacement": 10060,
+              "liquidity event": 30413,
+              "premium/discount": 15283,
+              "structural shift": 7
+            },
+            "percent_of_eligible": {
+              "HTF context": 49.636692421502545,
+              "PD array": 99.99671214861088,
+              "displacement": 33.07578497451915,
+              "liquidity event": 99.99342429722176,
+              "premium/discount": 50.24823277987835,
+              "structural shift": 0.023014959723820484
+            },
+            "percent_of_total_m15": {
+              "HTF context": 12.143466160454304,
+              "PD array": 24.46389215102717,
+              "displacement": 8.091890413603386,
+              "liquidity event": 24.463087788162998,
+              "premium/discount": 12.293077653190908,
+              "structural shift": 0.005630540049227007
+            }
+          },
+          "h4_bias_counts": {
+            "bearish": 116043,
+            "bullish": 8008,
+            "neutral": 271
+          },
+          "liquidity_terminal_event_types": {
+            "reclaim_sweep": 4937,
+            "structural_break": 10866,
+            "wick_sweep": 14610
+          },
+          "n_minus_1_missing_conditions": {
+            "structural shift": 1317
+          },
+          "near_miss_distribution": {
+            "2/6": 2668,
+            "3/6": 16367,
+            "4/6": 10063,
+            "5/6": 1317
+          },
+          "pairwise_intersections": {
+            "HTF context \u00d7 PD array": 15097,
+            "HTF context \u00d7 displacement": 5086,
+            "HTF context \u00d7 liquidity event": 15097,
+            "HTF context \u00d7 premium/discount": 3926,
+            "HTF context \u00d7 structural shift": 1,
+            "PD array \u00d7 premium/discount": 15282,
+            "displacement \u00d7 PD array": 10060,
+            "displacement \u00d7 premium/discount": 4997,
+            "liquidity event \u00d7 PD array": 30412,
+            "liquidity event \u00d7 displacement": 10058,
+            "liquidity event \u00d7 premium/discount": 15283,
+            "liquidity event \u00d7 structural shift": 7,
+            "structural shift \u00d7 PD array": 7,
+            "structural shift \u00d7 displacement": 4
+          },
+          "pairwise_zero_intersections": [
+            "structural shift \u00d7 premium/discount"
+          ],
+          "pd_array_age_execution_bars": {
+            "count": 30414,
+            "maximum": 121,
+            "mean": 14.26435194318406,
+            "minimum": 0
+          },
+          "pd_array_types": {
+            "Gap": 5,
+            "InvertedFairValueGap": 30409
+          },
+          "representative_examples": [
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "PD array": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 9,
+                  "passed": true,
+                  "source_id": "buy_side:1:5"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 9,
+                  "passed": true,
+                  "source_id": "range:9"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 2,
+              "timestamp": "2018-01-02T02:30:00Z",
+              "trigger": "current_terminal_liquidity"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "PD array": {
+                  "detail": "Gap",
+                  "index": 10,
+                  "passed": true,
+                  "source_id": "fvg:10"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 11,
+                  "passed": true,
+                  "source_id": "displacement:11"
+                },
+                "liquidity event": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 11,
+                  "passed": false,
+                  "source_id": "range:11"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 2,
+              "timestamp": "2018-01-02T03:00:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "PD array": {
+                  "detail": "Gap",
+                  "index": 13,
+                  "passed": true,
+                  "source_id": "fvg:13"
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "structural_break",
+                  "index": 13,
+                  "passed": true,
+                  "source_id": "buy_side:2:9"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 13,
+                  "passed": false,
+                  "source_id": "range:13"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 2,
+              "timestamp": "2018-01-02T03:30:00Z",
+              "trigger": "current_terminal_liquidity"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 0,
+                  "passed": false,
+                  "source_id": "htf:0"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 15,
+                  "passed": true,
+                  "source_id": "ifvg:15"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 15,
+                  "passed": true,
+                  "source_id": "displacement:15"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 9,
+                  "passed": true,
+                  "source_id": "buy_side:1:5"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 15,
+                  "passed": false,
+                  "source_id": "range:15"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T04:00:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 0,
+                  "passed": false,
+                  "source_id": "htf:0"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 15,
+                  "passed": true,
+                  "source_id": "ifvg:15"
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 9,
+                  "passed": true,
+                  "source_id": "buy_side:1:5"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 18,
+                  "passed": false,
+                  "source_id": "range:18"
+                },
+                "structural shift": {
+                  "detail": "confirmed MSS",
+                  "index": 18,
+                  "passed": true,
+                  "source_id": "swing:11"
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T04:45:00Z",
+              "trigger": "current_mss"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 1,
+                  "passed": false,
+                  "source_id": "htf:1"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 25,
+                  "passed": true,
+                  "source_id": "ifvg:25"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 31,
+                  "passed": true,
+                  "source_id": "displacement:31"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 19,
+                  "passed": true,
+                  "source_id": "sell_side:1:8"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 31,
+                  "passed": false,
+                  "source_id": "range:31"
+                },
+                "structural shift": {
+                  "detail": "confirmed MSS",
+                  "index": 31,
+                  "passed": true,
+                  "source_id": "swing:13"
+                }
+              },
+              "passed_required_count": 4,
+              "timestamp": "2018-01-02T08:00:00Z",
+              "trigger": "current_mss"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 23,
+                  "passed": true,
+                  "source_id": "htf:23"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 385,
+                  "passed": true,
+                  "source_id": "ifvg:385"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 395,
+                  "passed": true,
+                  "source_id": "displacement:395"
+                },
+                "liquidity event": {
+                  "detail": "structural_break",
+                  "index": 367,
+                  "passed": true,
+                  "source_id": "buy_side:43:357"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 395,
+                  "passed": true,
+                  "source_id": "range:395"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-08T03:00:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 45,
+                  "passed": true,
+                  "source_id": "htf:45"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 729,
+                  "passed": true,
+                  "source_id": "ifvg:729"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 741,
+                  "passed": true,
+                  "source_id": "displacement:741"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 741,
+                  "passed": true,
+                  "source_id": "buy_side:49:397"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 741,
+                  "passed": true,
+                  "source_id": "range:741"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-11T17:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 46,
+                  "passed": true,
+                  "source_id": "htf:46"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 760,
+                  "passed": true,
+                  "source_id": "ifvg:760"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 762,
+                  "passed": true,
+                  "source_id": "displacement:762"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 741,
+                  "passed": true,
+                  "source_id": "buy_side:49:397"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 762,
+                  "passed": true,
+                  "source_id": "range:762"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-11T22:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 48,
+                  "passed": true,
+                  "source_id": "htf:48"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 798,
+                  "passed": true,
+                  "source_id": "ifvg:798"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 798,
+                  "passed": true,
+                  "source_id": "displacement:798"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 777,
+                  "passed": true,
+                  "source_id": "buy_side:91:740"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 798,
+                  "passed": true,
+                  "source_id": "range:798"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-12T07:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 245,
+                  "passed": true,
+                  "source_id": "htf:245"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 3935,
+                  "passed": true,
+                  "source_id": "ifvg:3935"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 3945,
+                  "passed": true,
+                  "source_id": "displacement:3945"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 3944,
+                  "passed": true,
+                  "source_id": "sell_side:484:3917"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 3945,
+                  "passed": true,
+                  "source_id": "range:3945"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-02-28T02:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 246,
+                  "passed": true,
+                  "source_id": "htf:246"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 3957,
+                  "passed": true,
+                  "source_id": "ifvg:3957"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 3957,
+                  "passed": true,
+                  "source_id": "displacement:3957"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 3953,
+                  "passed": true,
+                  "source_id": "sell_side:487:3947"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 3957,
+                  "passed": true,
+                  "source_id": "range:3957"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-02-28T05:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 247,
+                  "passed": true,
+                  "source_id": "htf:247"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 3957,
+                  "passed": true,
+                  "source_id": "ifvg:3957"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 3970,
+                  "passed": true,
+                  "source_id": "displacement:3970"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 3968,
+                  "passed": true,
+                  "source_id": "sell_side:489:3962"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 3970,
+                  "passed": true,
+                  "source_id": "range:3970"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-02-28T08:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 251,
+                  "passed": true,
+                  "source_id": "htf:251"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 4026,
+                  "passed": true,
+                  "source_id": "ifvg:4026"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 4032,
+                  "passed": true,
+                  "source_id": "displacement:4032"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 4032,
+                  "passed": true,
+                  "source_id": "sell_side:497:4025"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 4032,
+                  "passed": true,
+                  "source_id": "range:4032"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-03-01T00:15:00Z",
+              "trigger": "current_displacement"
+            }
+          ],
+          "total_completed_m15_candles": 124322
+        }
+      },
+      "GBPUSD": {
+        "development_fingerprint": "4197fa40c489531ff1f4461156c937ee92ec84bd9c9b5385213425abee3959f9",
+        "diagnostic": {
+          "completed_h4_context_candles": 124309,
+          "completed_h4_context_percentage_total_m15": 99.98793475113413,
+          "dealing_range_available_candles": 124319,
+          "dealing_range_available_percentage_total_m15": 99.99597825037804,
+          "direction_counts": {
+            "bearish": 15408,
+            "bullish": 15418
+          },
+          "direction_trigger_counts": {
+            "current_displacement": 10065,
+            "current_mss": 7,
+            "current_terminal_liquidity": 20754
+          },
+          "directional_breakdown": {
+            "bearish": {
+              "cumulative_pass_counts": {
+                "HTF context": 14285,
+                "liquidity event": 14285
+              },
+              "eligible_candles": 15408,
+              "emitted_signals": 0,
+              "first_fail_counts": {
+                "HTF context": 1123,
+                "structural shift": 14285
+              },
+              "individual_pass_counts": {
+                "HTF context": 14285,
+                "PD array": 15407,
+                "displacement": 5069,
+                "liquidity event": 15408,
+                "premium/discount": 6020,
+                "structural shift": 4
+              },
+              "near_miss_distribution": {
+                "2/6": 270,
+                "3/6": 6647,
+                "4/6": 6743,
+                "5/6": 1748
+              },
+              "pairwise_intersections": {
+                "HTF context \u00d7 PD array": 14285,
+                "HTF context \u00d7 displacement": 4710,
+                "HTF context \u00d7 liquidity event": 14285,
+                "HTF context \u00d7 premium/discount": 5312,
+                "PD array \u00d7 premium/discount": 6019,
+                "displacement \u00d7 PD array": 5069,
+                "displacement \u00d7 premium/discount": 1963,
+                "liquidity event \u00d7 PD array": 15407,
+                "liquidity event \u00d7 displacement": 5069,
+                "liquidity event \u00d7 premium/discount": 6020,
+                "liquidity event \u00d7 structural shift": 4,
+                "structural shift \u00d7 PD array": 4,
+                "structural shift \u00d7 displacement": 2
+              }
+            },
+            "bullish": {
+              "cumulative_pass_counts": {
+                "HTF context": 1147,
+                "liquidity event": 1147
+              },
+              "eligible_candles": 15418,
+              "emitted_signals": 0,
+              "first_fail_counts": {
+                "HTF context": 14271,
+                "structural shift": 1147
+              },
+              "individual_pass_counts": {
+                "HTF context": 1147,
+                "PD array": 15418,
+                "displacement": 4999,
+                "liquidity event": 15417,
+                "premium/discount": 9270,
+                "structural shift": 3
+              },
+              "near_miss_distribution": {
+                "2/6": 3669,
+                "3/6": 8197,
+                "4/6": 3435,
+                "5/6": 117
+              },
+              "pairwise_intersections": {
+                "HTF context \u00d7 PD array": 1147,
+                "HTF context \u00d7 displacement": 384,
+                "HTF context \u00d7 liquidity event": 1147,
+                "HTF context \u00d7 premium/discount": 391,
+                "PD array \u00d7 premium/discount": 9270,
+                "displacement \u00d7 PD array": 4999,
+                "displacement \u00d7 premium/discount": 3010,
+                "liquidity event \u00d7 PD array": 15417,
+                "liquidity event \u00d7 displacement": 4998,
+                "liquidity event \u00d7 premium/discount": 9270,
+                "liquidity event \u00d7 structural shift": 3,
+                "structural shift \u00d7 PD array": 3,
+                "structural shift \u00d7 displacement": 1
+              }
+            }
+          },
+          "eligible_candidate_evaluations": 30826,
+          "eligible_percentage_total_m15": 24.79489076928027,
+          "emitted_research_signals": 0,
+          "first_fail_counts": {
+            "HTF context": 15394,
+            "structural shift": 15432
+          },
+          "funnel": {
+            "cumulative_pass_counts": {
+              "HTF context": 15432,
+              "liquidity event": 15432
+            },
+            "individual_pass_counts": {
+              "HTF context": 15432,
+              "PD array": 30825,
+              "displacement": 10068,
+              "liquidity event": 30825,
+              "premium/discount": 15290,
+              "structural shift": 7
+            },
+            "percent_of_eligible": {
+              "HTF context": 50.06163628106144,
+              "PD array": 99.99675598520729,
+              "displacement": 32.660740932978655,
+              "liquidity event": 99.99675598520729,
+              "premium/discount": 49.60098618049698,
+              "structural shift": 0.022708103548952183
+            },
+            "percent_of_total_m15": {
+              "HTF context": 12.412728033203566,
+              "PD array": 24.794086419355878,
+              "displacement": 8.098195038769667,
+              "liquidity event": 24.794086419355878,
+              "premium/discount": 12.298510343940027,
+              "structural shift": 0.00563044947073775
+            }
+          },
+          "h4_bias_counts": {
+            "bearish": 115068,
+            "bullish": 8937,
+            "neutral": 319
+          },
+          "liquidity_terminal_event_types": {
+            "reclaim_sweep": 4923,
+            "structural_break": 10908,
+            "wick_sweep": 14994
+          },
+          "n_minus_1_missing_conditions": {
+            "structural shift": 1865
+          },
+          "near_miss_distribution": {
+            "2/6": 3939,
+            "3/6": 14844,
+            "4/6": 10178,
+            "5/6": 1865
+          },
+          "pairwise_intersections": {
+            "HTF context \u00d7 PD array": 15432,
+            "HTF context \u00d7 displacement": 5094,
+            "HTF context \u00d7 liquidity event": 15432,
+            "HTF context \u00d7 premium/discount": 5703,
+            "PD array \u00d7 premium/discount": 15289,
+            "displacement \u00d7 PD array": 10068,
+            "displacement \u00d7 premium/discount": 4973,
+            "liquidity event \u00d7 PD array": 30824,
+            "liquidity event \u00d7 displacement": 10067,
+            "liquidity event \u00d7 premium/discount": 15290,
+            "liquidity event \u00d7 structural shift": 7,
+            "structural shift \u00d7 PD array": 7,
+            "structural shift \u00d7 displacement": 3
+          },
+          "pairwise_zero_intersections": [
+            "HTF context \u00d7 structural shift",
+            "structural shift \u00d7 premium/discount"
+          ],
+          "pd_array_age_execution_bars": {
+            "count": 30825,
+            "maximum": 141,
+            "mean": 14.437469586374696,
+            "minimum": 0
+          },
+          "pd_array_types": {
+            "Gap": 2,
+            "InvertedFairValueGap": 30823
+          },
+          "representative_examples": [
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "PD array": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 10,
+                  "passed": true,
+                  "source_id": "buy_side:1:6"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 10,
+                  "passed": true,
+                  "source_id": "range:10"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 2,
+              "timestamp": "2018-01-02T02:45:00Z",
+              "trigger": "current_terminal_liquidity"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "PD array": {
+                  "detail": "Gap",
+                  "index": 10,
+                  "passed": true,
+                  "source_id": "fvg:10"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 12,
+                  "passed": true,
+                  "source_id": "displacement:12"
+                },
+                "liquidity event": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 12,
+                  "passed": false,
+                  "source_id": "range:12"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 2,
+              "timestamp": "2018-01-02T03:15:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 0,
+                  "passed": false,
+                  "source_id": "htf:0"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 15,
+                  "passed": true,
+                  "source_id": "ifvg:15"
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 10,
+                  "passed": true,
+                  "source_id": "buy_side:1:6"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 16,
+                  "passed": false,
+                  "source_id": "range:16"
+                },
+                "structural shift": {
+                  "detail": "confirmed MSS",
+                  "index": 16,
+                  "passed": true,
+                  "source_id": "swing:11"
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T04:15:00Z",
+              "trigger": "current_mss"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 0,
+                  "passed": false,
+                  "source_id": "htf:0"
+                },
+                "PD array": {
+                  "detail": "Gap",
+                  "index": 13,
+                  "passed": true,
+                  "source_id": "fvg:13"
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 17,
+                  "passed": true,
+                  "source_id": "sell_side:2:11"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 17,
+                  "passed": true,
+                  "source_id": "range:17"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T04:30:00Z",
+              "trigger": "current_terminal_liquidity"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 0,
+                  "passed": false,
+                  "source_id": "htf:0"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 18,
+                  "passed": true,
+                  "source_id": "ifvg:18"
+                },
+                "displacement": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 17,
+                  "passed": true,
+                  "source_id": "sell_side:2:11"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 21,
+                  "passed": false,
+                  "source_id": "range:21"
+                },
+                "structural shift": {
+                  "detail": "confirmed MSS",
+                  "index": 21,
+                  "passed": true,
+                  "source_id": "swing:13"
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T05:30:00Z",
+              "trigger": "current_mss"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is neutral",
+                  "index": 2,
+                  "passed": false,
+                  "source_id": "htf:2"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 53,
+                  "passed": true,
+                  "source_id": "ifvg:53"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 53,
+                  "passed": true,
+                  "source_id": "displacement:53"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 47,
+                  "passed": true,
+                  "source_id": "buy_side:6:44"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 53,
+                  "passed": false,
+                  "source_id": "range:53"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 3,
+              "timestamp": "2018-01-02T13:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 23,
+                  "passed": true,
+                  "source_id": "htf:23"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 357,
+                  "passed": true,
+                  "source_id": "ifvg:357"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 383,
+                  "passed": true,
+                  "source_id": "displacement:383"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 381,
+                  "passed": true,
+                  "source_id": "sell_side:45:378"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 383,
+                  "passed": true,
+                  "source_id": "range:383"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-06T00:00:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 23,
+                  "passed": true,
+                  "source_id": "htf:23"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 357,
+                  "passed": true,
+                  "source_id": "ifvg:357"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 397,
+                  "passed": true,
+                  "source_id": "displacement:397"
+                },
+                "liquidity event": {
+                  "detail": "structural_break",
+                  "index": 389,
+                  "passed": true,
+                  "source_id": "buy_side:50:383"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 397,
+                  "passed": true,
+                  "source_id": "range:397"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-08T03:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 26,
+                  "passed": true,
+                  "source_id": "htf:26"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 434,
+                  "passed": true,
+                  "source_id": "ifvg:434"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 434,
+                  "passed": true,
+                  "source_id": "displacement:434"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 433,
+                  "passed": true,
+                  "source_id": "sell_side:39:334"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 434,
+                  "passed": true,
+                  "source_id": "range:434"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-08T12:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 29,
+                  "passed": true,
+                  "source_id": "htf:29"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 494,
+                  "passed": true,
+                  "source_id": "ifvg:494"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 494,
+                  "passed": true,
+                  "source_id": "displacement:494"
+                },
+                "liquidity event": {
+                  "detail": "reclaim_sweep",
+                  "index": 494,
+                  "passed": true,
+                  "source_id": "sell_side:58:480"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 494,
+                  "passed": true,
+                  "source_id": "range:494"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-09T03:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bullish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bullish",
+                  "index": 30,
+                  "passed": true,
+                  "source_id": "htf:30"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 510,
+                  "passed": true,
+                  "source_id": "ifvg:510"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 510,
+                  "passed": true,
+                  "source_id": "displacement:510"
+                },
+                "liquidity event": {
+                  "detail": "structural_break",
+                  "index": 497,
+                  "passed": true,
+                  "source_id": "buy_side:64:491"
+                },
+                "premium/discount": {
+                  "detail": "discount",
+                  "index": 510,
+                  "passed": true,
+                  "source_id": "range:510"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-09T07:45:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 48,
+                  "passed": true,
+                  "source_id": "htf:48"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 726,
+                  "passed": true,
+                  "source_id": "ifvg:726"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 783,
+                  "passed": true,
+                  "source_id": "displacement:783"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 777,
+                  "passed": true,
+                  "source_id": "buy_side:6:44"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 783,
+                  "passed": true,
+                  "source_id": "range:783"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-12T04:00:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 48,
+                  "passed": true,
+                  "source_id": "htf:48"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 726,
+                  "passed": true,
+                  "source_id": "ifvg:726"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 797,
+                  "passed": true,
+                  "source_id": "displacement:797"
+                },
+                "liquidity event": {
+                  "detail": "wick_sweep",
+                  "index": 777,
+                  "passed": true,
+                  "source_id": "buy_side:6:44"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 797,
+                  "passed": true,
+                  "source_id": "range:797"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-12T07:30:00Z",
+              "trigger": "current_displacement"
+            },
+            {
+              "direction": "bearish",
+              "evidence": {
+                "HTF context": {
+                  "detail": "completed HTF bias is bearish",
+                  "index": 49,
+                  "passed": true,
+                  "source_id": "htf:49"
+                },
+                "PD array": {
+                  "detail": "InvertedFairValueGap",
+                  "index": 803,
+                  "passed": true,
+                  "source_id": "ifvg:803"
+                },
+                "displacement": {
+                  "detail": "matching displacement",
+                  "index": 803,
+                  "passed": true,
+                  "source_id": "displacement:803"
+                },
+                "liquidity event": {
+                  "detail": "structural_break",
+                  "index": 799,
+                  "passed": true,
+                  "source_id": "sell_side:91:787"
+                },
+                "premium/discount": {
+                  "detail": "premium",
+                  "index": 803,
+                  "passed": true,
+                  "source_id": "range:803"
+                },
+                "structural shift": {
+                  "detail": "none",
+                  "index": null,
+                  "passed": false,
+                  "source_id": null
+                }
+              },
+              "passed_required_count": 5,
+              "timestamp": "2018-01-12T09:00:00Z",
+              "trigger": "current_displacement"
+            }
+          ],
+          "total_completed_m15_candles": 124324
+        }
+      }
+    },
+    "scope": "non-mutating diagnostic over development source years 2018-2022 only"
+  },
+  "diagnostic_fingerprint": "050e7809a07323c90d3517bd61643f0d880797d2651ae0d5eea0f1054c0c6d5d",
+  "fingerprint_algorithm": "sha256(canonical-json(diagnostic))"
+}

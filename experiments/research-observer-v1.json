@@ -1,0 +1,583 @@
+{
+  "fingerprint_algorithm": "sha256(canonical-json(specification))",
+  "observer_fingerprint": "018885c10da1606cc72a70a9ecb1067ae8d1cb02367e4a7f570a523d3420a6aa",
+  "specification": {
+    "benchmark_implementation_sha256": "ecfdb6d3600a82cf013813cccc1150c33548154f48b9b80d84f919e40b5e24b1",
+    "causal_guarantees": [
+      "Observer accepts only one completed candle plus causal snapshot and read-only selected references; no future series input.",
+      "Every index consumed once, sequentially from zero; aware increasing timestamps; event ages use indices.",
+      "Engine, snapshot, signal, structure and configuration never mutated by observer or adapter.",
+      "No historical engine-state reconstruction or cumulative-history copy in observer.",
+      "Observation and future-label types and exports are separate; labels carry exact observation fingerprints.",
+      "No MSS validity duration or retracement window; no gate changes or fallback stops."
+    ],
+    "configuration_identity": "e9200e72f7948321808a917448e65409d75bb7add2b89cd5a3a04c0a9b708f54",
+    "default_label_configuration": {
+      "excursions": "full observed window, not stopped at invalidation or target",
+      "horizon_subsequent_execution_candles": 96,
+      "incomplete_history": "censored",
+      "same_candle_policy": "conservative",
+      "target_races": [
+        1,
+        2
+      ]
+    },
+    "engine_configuration": {
+      "displacement_body_ratio": 0.6,
+      "displacement_lookback": 5,
+      "displacement_range_multiple": 1.5,
+      "equilibrium_tolerance": 0.0,
+      "liquidity_tolerance": 0.0,
+      "reclaim_window": 1,
+      "require_displacement": true,
+      "require_htf_bias": true,
+      "require_liquidity_event": true,
+      "require_mss": true,
+      "require_pd_array": true,
+      "require_price_zone": true,
+      "swing_window": 2
+    },
+    "export_identity_rules": [
+      "canonical JSON: sorted keys, compact separators, ASCII escapes, finite numbers",
+      "CSV: UTF-8 LF fixed schema field order; cells canonical JSON",
+      "manifest payload binds source, engine, implementation, config, population, row count, schema, CSV hash and parent observation dataset",
+      "dataset fingerprint is sha256(canonical-json(dataset)); observation join fingerprint is sha256(canonical-json(observation))",
+      "generated bulk datasets remain ignored under .research-data; no overwrite; partial table without manifest is not finalized"
+    ],
+    "frozen_checkpoints": {
+      "CP-001-baseline-v1.json": "043cd6f49ca94709ac1acca04b6bf39285a0dc18baa436f3861f164512debf37",
+      "CP-001-development-results-v1.json": "43ae8a681b9ab72e754ed94120c73625bac9e4c6855a5ccdffb6b15f88c2e4d7",
+      "CP-001-zero-candidate-diagnostic-v1.json": "fd038d77fc4f2ff8a036e251459ff4b668009ffaa187e25c0083c68a2c550330"
+    },
+    "gate_order": [
+      "HTF context",
+      "liquidity event",
+      "structural shift",
+      "displacement",
+      "PD array",
+      "premium/discount"
+    ],
+    "identifier": "research-observer-v1",
+    "implementation_files": {
+      "research/__init__.py": "ca1f7fc8d96234fbe277674569b937926682f929488f6a9a6072641f8d497e98",
+      "research/labels.py": "b088a166586bd6b80e27879ff1bddac887d5937eb0e9f4c5c0d67941784b9cb9",
+      "research/observer.py": "6b241ced0820247a252ffacffebd12a0ced9b43f5b233c1906a4ad2588c2fb2e",
+      "research/storage.py": "066b3fb74555f419b6e7b7ed7594c76a111378641152cb8b0e030753184ca1e9"
+    },
+    "implementation_identity": "7d079ac8f2a58bf65ef699456e64af9ef8ed700e9ec97f7f1be06aabf6d04363",
+    "kind": "research infrastructure only",
+    "label_schema_version": "research-labels/1",
+    "limitations": [
+      "Frozen CP-001 MSS/price-zone contradiction remains; no attainable 6/6 engine example.",
+      "Adapter depends on frozen Revision 2 private read-only indexes; requires identity verification when upgrading.",
+      "Caller supplies authentic source and engine fingerprints; entry-row match alone is not full-history verification.",
+      "Latest directional event references only, not exhaustive event ledger; IFVG later lifecycle unknown.",
+      "Default eligible population omits no-trigger retracements; all_completed mode is needed for those sequences.",
+      "Engine still retains snapshots; observer does not alter its memory behavior.",
+      "Fixed-horizon labeler is O(rows*horizon); OHLC cannot recover intrabar paths.",
+      "No costs, execution, optimization, evaluator, ML or connectivity.",
+      "No atomic directory publication or resumable observer state."
+    ],
+    "observation_schema_version": "research-observer/1",
+    "research_boundary": "Only deterministic synthetic data and explicitly permitted 2018-2022 development prefixes; validation/holdout prohibited.",
+    "schemas": {
+      "EventRef": [
+        {
+          "name": "index",
+          "type": "int"
+        },
+        {
+          "name": "direction",
+          "type": "str"
+        },
+        {
+          "name": "kind",
+          "type": "str"
+        },
+        {
+          "name": "level",
+          "type": "float | None"
+        },
+        {
+          "name": "source_index",
+          "type": "int | None"
+        }
+      ],
+      "FutureLabel": [
+        {
+          "name": "schema_version",
+          "type": "str"
+        },
+        {
+          "name": "instrument",
+          "type": "str"
+        },
+        {
+          "name": "execution_timestamp",
+          "type": "str"
+        },
+        {
+          "name": "execution_index",
+          "type": "int"
+        },
+        {
+          "name": "observation_fingerprint",
+          "type": "str"
+        },
+        {
+          "name": "horizon",
+          "type": "int"
+        },
+        {
+          "name": "observed_bars",
+          "type": "int"
+        },
+        {
+          "name": "horizon_complete",
+          "type": "bool"
+        },
+        {
+          "name": "labelable",
+          "type": "bool"
+        },
+        {
+          "name": "unlabelable_reason",
+          "type": "str | None"
+        },
+        {
+          "name": "mfe",
+          "type": "float | None"
+        },
+        {
+          "name": "mae",
+          "type": "float | None"
+        },
+        {
+          "name": "mfe_r",
+          "type": "float | None"
+        },
+        {
+          "name": "mae_r",
+          "type": "float | None"
+        },
+        {
+          "name": "bars_to_1r",
+          "type": "int | None"
+        },
+        {
+          "name": "bars_to_2r",
+          "type": "int | None"
+        },
+        {
+          "name": "bars_to_invalidation",
+          "type": "int | None"
+        },
+        {
+          "name": "one_r_before_invalidation",
+          "type": "bool | None"
+        },
+        {
+          "name": "two_r_before_invalidation",
+          "type": "bool | None"
+        },
+        {
+          "name": "outcome_1r",
+          "type": "str"
+        },
+        {
+          "name": "outcome_2r",
+          "type": "str"
+        },
+        {
+          "name": "ambiguity_1r",
+          "type": "bool"
+        },
+        {
+          "name": "ambiguity_2r",
+          "type": "bool"
+        },
+        {
+          "name": "same_candle_policy",
+          "type": "str"
+        }
+      ],
+      "LiquidityRef": [
+        {
+          "name": "index",
+          "type": "int"
+        },
+        {
+          "name": "pool_id",
+          "type": "str"
+        },
+        {
+          "name": "side",
+          "type": "str"
+        },
+        {
+          "name": "level",
+          "type": "float"
+        },
+        {
+          "name": "event_type",
+          "type": "str | None"
+        }
+      ],
+      "ObservationRecord": [
+        {
+          "name": "schema_version",
+          "type": "str"
+        },
+        {
+          "name": "instrument",
+          "type": "str"
+        },
+        {
+          "name": "execution_timestamp",
+          "type": "str"
+        },
+        {
+          "name": "execution_index",
+          "type": "int"
+        },
+        {
+          "name": "direction_trigger",
+          "type": "str | None"
+        },
+        {
+          "name": "selected_direction",
+          "type": "str | None"
+        },
+        {
+          "name": "open",
+          "type": "float"
+        },
+        {
+          "name": "high",
+          "type": "float"
+        },
+        {
+          "name": "low",
+          "type": "float"
+        },
+        {
+          "name": "close",
+          "type": "float"
+        },
+        {
+          "name": "range_low",
+          "type": "float | None"
+        },
+        {
+          "name": "range_high",
+          "type": "float | None"
+        },
+        {
+          "name": "range_midpoint",
+          "type": "float | None"
+        },
+        {
+          "name": "range_position",
+          "type": "float | None"
+        },
+        {
+          "name": "price_zone",
+          "type": "str | None"
+        },
+        {
+          "name": "h4_available",
+          "type": "bool"
+        },
+        {
+          "name": "h4_completed_index",
+          "type": "int | None"
+        },
+        {
+          "name": "h4_completed_timestamp",
+          "type": "str | None"
+        },
+        {
+          "name": "h4_bias",
+          "type": "str"
+        },
+        {
+          "name": "h4_event",
+          "type": "research.observer.EventRef | None"
+        },
+        {
+          "name": "structural_bias",
+          "type": "str"
+        },
+        {
+          "name": "protected_high",
+          "type": "research.observer.SwingRef | None"
+        },
+        {
+          "name": "protected_low",
+          "type": "research.observer.SwingRef | None"
+        },
+        {
+          "name": "current_bos",
+          "type": "tuple[research.observer.EventRef, ...]"
+        },
+        {
+          "name": "current_mss",
+          "type": "tuple[research.observer.EventRef, ...]"
+        },
+        {
+          "name": "latest_bullish_mss",
+          "type": "research.observer.EventRef | None"
+        },
+        {
+          "name": "latest_bearish_mss",
+          "type": "research.observer.EventRef | None"
+        },
+        {
+          "name": "matching_mss_age",
+          "type": "int | None"
+        },
+        {
+          "name": "liquidity_available",
+          "type": "bool"
+        },
+        {
+          "name": "liquidity_pool_id",
+          "type": "str | None"
+        },
+        {
+          "name": "liquidity_side",
+          "type": "str | None"
+        },
+        {
+          "name": "liquidity_event_type",
+          "type": "str | None"
+        },
+        {
+          "name": "liquidity_state",
+          "type": "str | None"
+        },
+        {
+          "name": "liquidity_structure",
+          "type": "str | None"
+        },
+        {
+          "name": "liquidity_source_index",
+          "type": "int | None"
+        },
+        {
+          "name": "liquidity_confirmation_index",
+          "type": "int | None"
+        },
+        {
+          "name": "liquidity_level",
+          "type": "float | None"
+        },
+        {
+          "name": "liquidity_index",
+          "type": "int | None"
+        },
+        {
+          "name": "liquidity_penetration_index",
+          "type": "int | None"
+        },
+        {
+          "name": "liquidity_age",
+          "type": "int | None"
+        },
+        {
+          "name": "latest_bullish_liquidity",
+          "type": "research.observer.LiquidityRef | None"
+        },
+        {
+          "name": "latest_bearish_liquidity",
+          "type": "research.observer.LiquidityRef | None"
+        },
+        {
+          "name": "current_displacement",
+          "type": "bool"
+        },
+        {
+          "name": "displacement_direction",
+          "type": "str | None"
+        },
+        {
+          "name": "candle_range",
+          "type": "float"
+        },
+        {
+          "name": "body_range_ratio",
+          "type": "float | None"
+        },
+        {
+          "name": "displacement_reference_range",
+          "type": "float | None"
+        },
+        {
+          "name": "displacement_range_threshold",
+          "type": "float | None"
+        },
+        {
+          "name": "displacement_body_threshold",
+          "type": "float"
+        },
+        {
+          "name": "latest_bullish_displacement_index",
+          "type": "int | None"
+        },
+        {
+          "name": "latest_bearish_displacement_index",
+          "type": "int | None"
+        },
+        {
+          "name": "matching_displacement_age",
+          "type": "int | None"
+        },
+        {
+          "name": "pd_type",
+          "type": "str | None"
+        },
+        {
+          "name": "pd_direction",
+          "type": "str | None"
+        },
+        {
+          "name": "pd_lower",
+          "type": "float | None"
+        },
+        {
+          "name": "pd_upper",
+          "type": "float | None"
+        },
+        {
+          "name": "pd_index",
+          "type": "int | None"
+        },
+        {
+          "name": "pd_source_index",
+          "type": "int | None"
+        },
+        {
+          "name": "pd_age",
+          "type": "int | None"
+        },
+        {
+          "name": "pd_state",
+          "type": "str | None"
+        },
+        {
+          "name": "pd_is_current",
+          "type": "bool | None"
+        },
+        {
+          "name": "latest_bullish_pd",
+          "type": "research.observer.PDRef | None"
+        },
+        {
+          "name": "latest_bearish_pd",
+          "type": "research.observer.PDRef | None"
+        },
+        {
+          "name": "gate_passes",
+          "type": "tuple[bool, ...]"
+        },
+        {
+          "name": "gates_passed",
+          "type": "int"
+        },
+        {
+          "name": "gates_required",
+          "type": "int"
+        },
+        {
+          "name": "first_failed_gate",
+          "type": "str | None"
+        },
+        {
+          "name": "missing_gates",
+          "type": "tuple[str, ...]"
+        },
+        {
+          "name": "accepted_by_cp001_v1",
+          "type": "bool"
+        },
+        {
+          "name": "entry",
+          "type": "float"
+        },
+        {
+          "name": "invalidation",
+          "type": "float | None"
+        },
+        {
+          "name": "risk_distance",
+          "type": "float | None"
+        },
+        {
+          "name": "levels_valid",
+          "type": "bool"
+        },
+        {
+          "name": "levels_reason",
+          "type": "str | None"
+        }
+      ],
+      "PDRef": [
+        {
+          "name": "kind",
+          "type": "str"
+        },
+        {
+          "name": "direction",
+          "type": "str"
+        },
+        {
+          "name": "index",
+          "type": "int"
+        },
+        {
+          "name": "source_index",
+          "type": "int"
+        },
+        {
+          "name": "lower",
+          "type": "float"
+        },
+        {
+          "name": "upper",
+          "type": "float"
+        },
+        {
+          "name": "state",
+          "type": "str"
+        }
+      ],
+      "SwingRef": [
+        {
+          "name": "index",
+          "type": "int"
+        },
+        {
+          "name": "confirmed_at",
+          "type": "int | None"
+        },
+        {
+          "name": "price",
+          "type": "float"
+        },
+        {
+          "name": "kind",
+          "type": "str"
+        },
+        {
+          "name": "structure",
+          "type": "str"
+        }
+      ]
+    },
+    "source_engine": {
+      "artifact": "experiments/CP-001-execution-revision-2.json",
+      "artifact_sha256": "0769832d7b10d8c683e6e27434e4c9048b780f456d084a35efafd889aaf4950c",
+      "revision_fingerprint": "5b0d557a3d6fcddebab74b79d2e6c3bb563fec8b6a5019d72111ea6f1f31ed2a"
+    }
+  }
+}

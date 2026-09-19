@@ -1,5 +1,10 @@
 # CP-002 temporal core V1 — synthetic implementation boundary
 
+**Archived generic fixture contract:** the later [Semantic Closure V1](CP-002-semantic-closure-v1.md)
+supersedes its broad multi-FVG and unresolved-semantics assumptions for the strict
+baseline. This module and its tests remain for reproducibility, not production
+eligibility. Use the separately versioned strict entrypoint documented there.
+
 Freeze commit: `23989d8` (`docs: freeze CP-002 temporal strategy v1`).
 Authority: [approved Freeze V1 and decision register](CP-002-strategy-spec-and-campaign-design-v1.md).
 

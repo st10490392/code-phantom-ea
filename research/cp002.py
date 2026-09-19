@@ -1,4 +1,8 @@
-"""CP-002 synthetic temporal core. No data loader, runner or outcome labeler.
+"""Archived generic CP-002 synthetic core. No data loader or runner.
+
+Current strict Semantic Closure V1 lives in research.cp002_v1. This archived
+fixture specification deliberately retains its original production refusal;
+its broad multi-child assumptions do not define strict V1 eligibility.
 
 Unresolved market semantics are not defaults. SyntheticContract certifies only
 fixture-local association/validity inputs; it cannot authorize a campaign.
